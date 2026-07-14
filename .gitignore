@@ -1,0 +1,12 @@
+# Root .gitignore for portofolio 
+ 
+# Backend (Laravel) 
+/backend/vendor/ 
+/backend/.env 
+/backend/storage/ 
+/backend/bootstrap/cache/ 
+ 
+# Frontend (Next.js) 
+/frontend/node_modules/ 
+/frontend/.next/ 
+/frontend/.env.local 
