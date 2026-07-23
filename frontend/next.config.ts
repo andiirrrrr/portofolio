@@ -17,7 +17,6 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  // Untuk mengizinkan akses dari network (opsional)
   allowedDevOrigins: ['192.168.100.35', 'localhost', '127.0.0.1'],
 };
 
