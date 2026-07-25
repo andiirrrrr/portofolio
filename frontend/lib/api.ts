@@ -23,10 +23,11 @@ export const getImageUrl = (path: string | null | undefined, fallback: string = 
     // Clean relative path (remove http://127.0.0.1:8000/storage/ or /storage/)
     const cleanPath = path.replace(/^(https?:\/\/[^\/]+)?(\/storage\/|\/)?/, '');
 
-    // Di environment lokal (localhost), utamakan ambil langsung dari server Laravel lokal (127.0.0.1:8000)
-    // Di Vercel (production), ambil dari /storage/ lokal frontend
+    // Di environment lokal (localhost), gunakan image-proxy ke 127.0.0.1:8000
+    // agar 3D WebGL Lanyard & Profile Card dapat membaca foto dari Laravel Admin tanpa terkendala CORS WebGL
     if (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
-        return `http://127.0.0.1:8000/storage/${cleanPath}`;
+        const fullUrl = `http://127.0.0.1:8000/storage/${cleanPath}`;
+        return `/api/image-proxy?url=${encodeURIComponent(fullUrl)}`;
     }
 
     return `/storage/${cleanPath}`;
