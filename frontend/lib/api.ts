@@ -24,7 +24,7 @@ export const getImageUrl = (path: string | null | undefined, fallback: string = 
     const cleanPath = path.replace(/^(https?:\/\/[^\/]+)?(\/storage\/|\/)?/, '');
 
     // 3. KONDISI LOCALHOST (Development di laptop):
-    // Ambil langsung dari Laravel lokal (127.0.0.1:8000) via proxy agar 3D WebGL Lanyard terhubung penuh tanpa CORS
+    // Ambil dari Laravel lokal (127.0.0.1:8000) via proxy agar 3D WebGL Lanyard terhubung penuh tanpa CORS
     if (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
         return `/api/image-proxy?url=${encodeURIComponent(`http://127.0.0.1:8000/storage/${cleanPath}`)}`;
     }
@@ -34,8 +34,14 @@ export const getImageUrl = (path: string | null | undefined, fallback: string = 
     return `/storage/${cleanPath}`;
 };
 
-// Generic helper dengan fallback otomatis ke initialData.json jika backend offline
+// Generic helper dengan fallback otomatis dan cepat ke initialData.json
 const fetchWithFallback = async (endpoint: string, fallbackKey: keyof typeof initialData) => {
+    // Di Vercel Live (bukan localhost) dan tanpa API URL khusus:
+    // Langsung gunakan initialData secara instan (0ms) agar Lanyard 3D & foto tidak fallback ke /assets/foto.jpeg
+    if (typeof window !== 'undefined' && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1' && !process.env.NEXT_PUBLIC_API_URL) {
+        return { data: { data: initialData[fallbackKey] } };
+    }
+
     try {
         const res = await api.get(endpoint);
         if (res.data && res.data.data) {
