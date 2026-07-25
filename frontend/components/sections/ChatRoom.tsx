@@ -68,9 +68,7 @@ export default function ChatRoom() {
     // Fungsi untuk ambil semua pesan dari server
     const fetchMessages = useCallback(async (isInitial = false) => {
         try {
-            const res = await getChatMessages(
-                isInitial ? undefined : lastTimestampRef.current ?? undefined
-            );
+            const res = await getChatMessages();
             const data: Message[] = res.data?.data ?? [];
 
             if (data.length > 0) {

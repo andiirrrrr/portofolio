@@ -140,7 +140,7 @@ export default function Navbar() {
                             }}
                             className="text-2xl font-bold text-white"
                         >
-                            <span className="text-blue-400">Portfolio</span>
+                            <span className="text-blue-400">Andir</span>
                             <span className="text-gray-light">.</span>
                         </a>
                     </motion.div>

@@ -61,16 +61,17 @@ export const getProjects = () => fetchWithFallback('/projects', 'projects');
 // Certificates
 export const getCertificates = () => fetchWithFallback('/certificates', 'certificates');
 
-// Chat Messages
-export const getChatMessages = async (since?: string) => {
+// Chat Messages (Publik real-time lintas perangkat HP & Laptop)
+export const getChatMessages = async () => {
     try {
-        return await api.get('/chat-messages', { params: since ? { since, limit: 100 } : { limit: 50 } });
+        const res = await axios.get('/api/chat');
+        return res;
     } catch {
         return { data: { data: [] } };
     }
 };
 
-// Contacts
+// Contacts / Chat Send
 export const sendContact = async (data: {
     name: string;
     email: string;
@@ -79,9 +80,12 @@ export const sendContact = async (data: {
     phone?: string;
 }) => {
     try {
-        return await api.post('/contacts', data);
+        const res = await axios.post('/api/chat', {
+            name: data.name,
+            message: data.message,
+        });
+        return res;
     } catch {
-        // Fallback simpan lokal atau beri respon sukses
         return { data: { success: true, message: 'Pesan berhasil terkirim!' } };
     }
 };
