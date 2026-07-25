@@ -9,28 +9,30 @@ const api = axios.create({
         'Content-Type': 'application/json',
         'Accept': 'application/json',
     },
-    timeout: 3000, // 3 detik timeout agar fallback cepat terhubung di production
+    timeout: 3000,
 });
 
 export const getImageUrl = (path: string | null | undefined, fallback: string = ''): string => {
     if (!path) return fallback;
 
-    // Local static paths or data URIs
-    if (path.startsWith('/') || path.startsWith('data:')) {
+    // Data URIs or absolute frontend paths starting with /assets/
+    if (path.startsWith('data:') || path.startsWith('/assets/')) {
         return path;
     }
 
-    // External full HTTP URLs (not localhost)
-    if ((path.startsWith('http://') || path.startsWith('https://')) && !path.includes('localhost') && !path.includes('127.0.0.1')) {
-        return `/api/image-proxy?url=${encodeURIComponent(path)}`;
+    // Clean relative path (remove http://127.0.0.1:8000/storage/ or /storage/)
+    const cleanPath = path.replace(/^(https?:\/\/[^\/]+)?(\/storage\/|\/)?/, '');
+
+    // Di environment lokal (localhost), utamakan ambil langsung dari server Laravel lokal (127.0.0.1:8000)
+    // Di Vercel (production), ambil dari /storage/ lokal frontend
+    if (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
+        return `http://127.0.0.1:8000/storage/${cleanPath}`;
     }
 
-    // Relative storage paths -> serve directly from frontend /storage/
-    const cleanPath = path.replace(/^(https?:\/\/[^\/]+)?(\/storage\/|\/)?/, '');
     return `/storage/${cleanPath}`;
 };
 
-// Generic helper dengan fallback otomatis ke initialData.json
+// Generic helper dengan fallback otomatis ke initialData.json jika backend offline
 const fetchWithFallback = async (endpoint: string, fallbackKey: keyof typeof initialData) => {
     try {
         const res = await api.get(endpoint);
@@ -61,7 +63,7 @@ export const getProjects = () => fetchWithFallback('/projects', 'projects');
 // Certificates
 export const getCertificates = () => fetchWithFallback('/certificates', 'certificates');
 
-// Chat Messages (Publik real-time lintas perangkat HP & Laptop)
+// Chat Messages
 export const getChatMessages = async () => {
     try {
         const res = await axios.get('/api/chat');
@@ -71,7 +73,7 @@ export const getChatMessages = async () => {
     }
 };
 
-// Contacts / Chat Send
+// Contacts
 export const sendContact = async (data: {
     name: string;
     email: string;

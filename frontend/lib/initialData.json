@@ -28,7 +28,7 @@
             "category": "Company Profile",
             "short_description": "Website catalog dan landing page untuk toko bunga Nafiorella Bloom, dilengkapi fitur pemesanan via WhatsApp, katalog produk, testimoni pelanggan, dan peta lokasi interaktif.",
             "description": "Website ini dibuat sebagai landing page dan katalog digital untuk toko bunga Nafiorella Bloom. Tujuan utamanya adalah memudahkan calon pembeli melihat pilihan produk karangan bunga serta langsung melakukan pemesanan via WhatsApp.\r\n\r\nBagian Utama Website:\r\n1. Header & Navigasi: Menu utama yang menghubungkan ke halaman Beranda, Tentang Kami, Layanan, dan Kontak.\r\n2. Banner Utama (Hero Section): Menampilkan nama brand, slogan, serta tombol aksi cepat \"Lihat Koleksi\" dan \"Konsultasi\".\r\n3. Keunggulan Layanan: Informasi poin utama seperti Bunga Segar, Desain Elegan (pilihan warna pink & putih), dan Siap Kirim.\r\n4. Katalog Produk Best Seller: Menampilkan kartu produk lengkap dengan foto, nama bouquet, ukuran, harga, serta tombol pesan langsung ke WhatsApp.\r\n5. Tentang Kami & Tim: Berisi profil usaha, visi-misi, pencapaian jumlah pelanggan, serta profil tim pengelola.\r\n6. Testimoni: Bagian ulasan dan penilai rating dari pelanggan sebelumnya.\r\n7. Peta Lokasi & Footer: Integrasi Google Maps untuk alamat toko fisik beserta informasi jam operasional dan kontak media sosial.",
-            "thumbnail": "projects\/thumbnails\/AFck47hiz0rAbRJkriZFfN2AEvpTh8es45GkLxN4.png",
+            "thumbnail": "projects\/thumbnails\/Xe1JMYYnKuRRl08v48xW8pTb369KnfK9OskROBOh.png",
             "github_url": null,
             "demo_url": "https:\/\/nafiorellabloom.free.je\/",
             "tech_stack": "[\"HTML5\",\"CSS3 \\\/ Tailwind CSS\",\"JavaScript\",\"PHP\",\"Google Maps API\"]",
@@ -40,7 +40,7 @@
             "is_active": true,
             "published_at": "2026-07-01T20:51:00.000000Z",
             "created_at": "2026-07-22T12:51:59.000000Z",
-            "updated_at": "2026-07-24T16:46:00.000000Z"
+            "updated_at": "2026-07-25T15:26:12.000000Z"
         },
         {
             "id": 1,
@@ -49,7 +49,7 @@
             "category": "Company Profile",
             "short_description": "Pengembangan website Company Profile NIPAH PARK yang modern dan interaktif menggunakan efek parallax scrolling, antarmuka responsif lintas perangkat, serta optimasi performa visual.",
             "description": "Project ini berfokus pada pengembangan dan pembaruan website Company Profile NIPAH PARK untuk menghadirkan pengalaman penjelajahan yang modern, interaktif, dan informatif. Dengan mengintegrasikan efek parallax scrolling, website ini memberikan kedalaman visual (depth effect) yang memberikan kesan elegan dan dinamis saat pengguna melakukan scrolling.",
-            "thumbnail": "projects\/thumbnails\/nh3UNYDAtFL3eplzfBnhsUDgjCKsSsr3dp2sjG8U.png",
+            "thumbnail": "projects\/thumbnails\/fgOUiYjDLdybugcpbmTt6rAvjmSq3u0irCiwnWdt.jpg",
             "github_url": null,
             "demo_url": "https:\/\/nipahparkdemo.free.je\/",
             "tech_stack": "[\"PHP\",\"Tailwind CSS\",\"HTML\",\"Java Script\"]",
@@ -61,7 +61,7 @@
             "is_active": true,
             "published_at": "2026-05-13T20:45:00.000000Z",
             "created_at": "2026-07-21T06:50:43.000000Z",
-            "updated_at": "2026-07-24T16:46:19.000000Z"
+            "updated_at": "2026-07-25T15:26:47.000000Z"
         },
         {
             "id": 3,
@@ -70,7 +70,7 @@
             "category": "E-Learning",
             "short_description": "Platform E-Learning berbasis web untuk SMAN 2 yang mendukung kegiatan belajar mengajar digital, pengelolaan materi, penugasan, presensi, hingga rekapitulasi nilai secara terpusat dengan akses multi-role (Admin, Guru, Siswa, dan Kepala Sekolah).",
             "description": "Sistem E-Learning SMANSASA adalah platform pembelajaran digital berbasis web yang dirancang untuk mempermudah alur kegiatan belajar mengajar, komunikasi, evaluasi, hingga pencatatan nilai di lingkungan sekolah. Sistem ini menghubungkan tiga peran pengguna utama (Admin, Guru, dan Siswa) dalam satu database terpusat dengan hak akses yang terpisah.\r\n\r\nFungsi Utama Berdasarkan Peran:\r\n\r\n1. Admin (Administrator Utama)\r\nBertanggung jawab mengelola data dasar sekolah, seperti membuat akun pengguna, menginput biodata guru dan siswa, mendaftarkan kelas serta mata pelajaran, menyebarkan pengumuman global, dan mengunduh laporan aktivitas sistem dalam format Excel\/PDF.\r\n\r\n2. Guru (Tenaga Pendidik)\r\nMengelola kegiatan pembelajaran untuk kelas yang diampu, meliputi unggah materi (PDF\/DOC\/PPT), pembuatan tugas lengkap dengan deadline, pemeriksaan berkas jawaban siswa, pemberian nilai dan catatan evaluasi, pengelolaan kuis, pencatatan absensi harian, hingga pengaturan bobot dan rekapitulasi nilai akhir semester.\r\n\r\n3. Siswa (Peserta Didik)\r\nMengakses dan mengunduh materi pelajaran sesuai kelasnya, membaca instruksi dan mengunggah berkas tugas sebelum deadline, memantau riwayat kehadiran, serta melihat hasil penilaian dan rekap nilai akhir.\r\n\r\nSistem ini dikembangkan menggunakan framework Laravel 10 dengan arsitektur MVC dan tampilan antarmuka yang responsif agar dapat diakses dengan nyaman melalui perangkat desktop maupun seluler.",
-            "thumbnail": "projects\/thumbnails\/D0ZHJXVTDpqUrtSbNCC5KJEv5p9cufCNwJNWQmWJ.png",
+            "thumbnail": "projects\/thumbnails\/SnsUNGVjUiZjbEHtOmcBVfGmIh49rkK272svtEGx.png",
             "github_url": null,
             "demo_url": "https:\/\/elearningsman21makassar.my.id",
             "tech_stack": "[\"PHP 8.1\",\"Laravel 10\",\"MySQL\",\"Bootstrap 5\",\"JavaScript\",\"HTML5 & CSS3\",\"Laravel Breeze\",\"Laravel Excel\",\"Vite\"]",
@@ -82,7 +82,7 @@
             "is_active": true,
             "published_at": "2026-07-15T20:55:00.000000Z",
             "created_at": "2026-07-22T12:56:59.000000Z",
-            "updated_at": "2026-07-24T14:03:58.000000Z"
+            "updated_at": "2026-07-25T15:24:52.000000Z"
         }
     ],
     "certificates": [

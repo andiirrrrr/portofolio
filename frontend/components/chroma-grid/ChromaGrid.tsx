@@ -215,6 +215,10 @@ const ChromaGrid = ({
                                     src={c.image}
                                     alt={c.title}
                                     loading="lazy"
+                                    onError={(e) => {
+                                        const clean = c.image.replace(/^(https?:\/\/[^\/]+)?(\/storage\/|\/)?/, '');
+                                        (e.target as HTMLImageElement).src = `/storage/${clean}`;
+                                    }}
                                     className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
                                 />
                             </div>
