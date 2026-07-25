@@ -179,7 +179,7 @@ const ChromaGrid = ({
                 // LOGIKA RADIUS: Cek apakah card ini berada dalam jangkauan hoverRadius dari card yang ditunjuk
                 const isHovered = hoverIndex !== null;
                 const distance = isHovered ? Math.abs(i - hoverIndex) : Infinity;
-                const isActive = distance <= hoverRadius;
+                const isActive = !isHovered || distance <= hoverRadius;
 
                 return (
                     <article
