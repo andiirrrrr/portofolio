@@ -98,7 +98,6 @@ export default function AnimatedSection({
                     ease: [0.16, 1, 0.3, 1], // Custom cubic-bezier spring-like smooth curve
                 }
             }
-            style={{ willChange: 'transform, opacity, filter' }}
             className={className}
         >
             {children}

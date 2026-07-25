@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, ExternalLink, Sparkles } from 'lucide-react';
 import { FaGithub } from 'react-icons/fa6';
 import { Project } from '@/types';
+import { getImageUrl } from '@/lib/api';
 
 interface ProjectModalProps {
   project: Project | null;
@@ -44,7 +45,7 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
               {project.thumbnail && (
                 <div className="relative w-full aspect-video rounded-xl overflow-hidden mb-6 bg-navy-800">
                   <img
-                    src={project.thumbnail}
+                    src={getImageUrl(project.thumbnail)}
                     alt={project.title}
                     className="w-full h-full object-cover"
                   />

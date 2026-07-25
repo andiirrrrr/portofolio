@@ -206,8 +206,8 @@ export default function AboutSection({ profile, experiences, educations }: About
                   experiences.map((exp, index) => (
                     <motion.div
                       key={exp.id}
-                      initial={{ opacity: 0, x: -20, filter: 'blur(2px)' }}
-                      whileInView={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
+                      initial={{ opacity: 0, x: -20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
                       viewport={{ once: true }}
                       transition={{ delay: index * 0.1, duration: 0.5 }}
                       className="relative bg-navy-800/90 rounded-xl p-5 border border-navy-700 hover:border-blue-500/40 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/10 group"
@@ -264,8 +264,8 @@ export default function AboutSection({ profile, experiences, educations }: About
                   educations.map((edu, index) => (
                     <motion.div
                       key={edu.id}
-                      initial={{ opacity: 0, x: 20, filter: 'blur(2px)' }}
-                      whileInView={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
+                      initial={{ opacity: 0, x: 20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
                       viewport={{ once: true }}
                       transition={{ delay: index * 0.1, duration: 0.5 }}
                       className="relative bg-navy-800/90 rounded-xl p-5 border border-navy-700 hover:border-cyan-500/40 transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/10 group"
