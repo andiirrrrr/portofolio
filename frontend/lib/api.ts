@@ -15,21 +15,22 @@ const api = axios.create({
 export const getImageUrl = (path: string | null | undefined, fallback: string = ''): string => {
     if (!path) return fallback;
 
-    // Data URIs or absolute frontend paths starting with /assets/
+    // 1. Data URIs atau path statis frontend (/assets/...)
     if (path.startsWith('data:') || path.startsWith('/assets/')) {
         return path;
     }
 
-    // Clean relative path (remove http://127.0.0.1:8000/storage/ or /storage/)
+    // 2. Bersihkan path (buang prefix http://.../storage/ atau /storage/)
     const cleanPath = path.replace(/^(https?:\/\/[^\/]+)?(\/storage\/|\/)?/, '');
 
-    // Di environment lokal (localhost), gunakan image-proxy ke 127.0.0.1:8000
-    // agar 3D WebGL Lanyard & Profile Card dapat membaca foto dari Laravel Admin tanpa terkendala CORS WebGL
+    // 3. KONDISI LOCALHOST (Development di laptop):
+    // Ambil langsung dari Laravel lokal (127.0.0.1:8000) via proxy agar 3D WebGL Lanyard terhubung penuh tanpa CORS
     if (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
-        const fullUrl = `http://127.0.0.1:8000/storage/${cleanPath}`;
-        return `/api/image-proxy?url=${encodeURIComponent(fullUrl)}`;
+        return `/api/image-proxy?url=${encodeURIComponent(`http://127.0.0.1:8000/storage/${cleanPath}`)}`;
     }
 
+    // 4. KONDISI VERCEL LIVE (Production di cloud) & SSR:
+    // Ambil dari /storage/ statis milik frontend Vercel
     return `/storage/${cleanPath}`;
 };
 
