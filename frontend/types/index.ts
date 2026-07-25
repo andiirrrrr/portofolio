@@ -7,6 +7,7 @@ export interface Profile {
     location: string;
     bio: string;
     profile_image: string | null;
+    lanyard_image: string | null;
     cv_file: string | null;
     github_url: string | null;
     linkedin_url: string | null;
@@ -99,20 +100,6 @@ export interface Certificate {
     image: string | null;
     order: number;
     is_active: boolean;
-}
-
-export interface Blog {
-    id: number;
-    title: string;
-    slug: string;
-    excerpt: string;
-    content: string;
-    featured_image: string | null;
-    category: string;
-    tags: string[];
-    views: number;
-    is_published: boolean;
-    published_at: string;
 }
 
 export interface Contact {

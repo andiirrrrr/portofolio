@@ -3,8 +3,17 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    /* scroll-behavior dihandle oleh JS Navbar agar tidak konflik */
+  }
+
   body {
     @apply bg-navy-950 text-white;
+  }
+
+  main {
+    /* Hanya opacity fade — tidak ada translateY agar tidak loncat saat refresh */
+    animation: pageEnter 0.4s ease-out both;
   }
 }
 
@@ -37,5 +46,15 @@
 
   100% {
     background-position: 0% 50%;
+  }
+}
+
+/* Smooth page-enter saat halaman dimuat / refresh */
+@keyframes pageEnter {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }

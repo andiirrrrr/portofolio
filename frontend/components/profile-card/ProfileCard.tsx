@@ -9,8 +9,6 @@ interface ProfileCardProps {
     title?: string;
     handle?: string;
     status?: string;
-    contactText?: string;
-    onContactClick?: () => void;
     className?: string;
 }
 
@@ -20,8 +18,6 @@ export default function ProfileCard({
     title = 'Full-Stack Developer',
     handle = 'andiirrrrr',
     status = 'Available',
-    contactText = 'Contact Me',
-    onContactClick,
     className = '',
 }: ProfileCardProps) {
     const cardRef = useRef<HTMLDivElement>(null);
@@ -144,29 +140,90 @@ export default function ProfileCard({
                     transition: isHovering || isMobile ? 'transform 0.05s ease-out' : 'transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)',
                 }}
             >
-                {/* CARD UTAMA */}
+                {/* CARD UTAMA dengan RAINBOW HOLOGRAPHIC BORDER */}
                 <div
                     className="relative rounded-2xl overflow-hidden"
                     style={{
                         border: '2px solid transparent',
-                        backgroundImage: 'linear-gradient(#0F172A, #0F172A), linear-gradient(135deg, rgba(59, 130, 246, 0.6), rgba(56, 189, 248, 0.4), rgba(59, 130, 246, 0.6))',
+                        backgroundImage: 'linear-gradient(#0F172A, #0F172A), linear-gradient(135deg, #ff6b6b, #ffd93d, #6bcb77, #4d96ff, #9b59b6, #ff6b6b)',
                         backgroundOrigin: 'border-box',
                         backgroundClip: 'padding-box, border-box',
+                        backgroundSize: '200% 200%',
+                        animation: 'rainbowBorder 4s linear infinite',
                         boxShadow: isHovering
                             ? '0 30px 60px -12px rgba(59, 130, 246, 0.5), inset 0 0 40px rgba(59, 130, 246, 0.05)'
                             : '0 20px 40px -12px rgba(59, 130, 246, 0.25), inset 0 0 20px rgba(59, 130, 246, 0.02)',
                     }}
                 >
+                    {/* Glossy Shine Effect - Mengkilat */}
+                    <div
+                        className="absolute inset-0 pointer-events-none z-10"
+                        style={{
+                            background: `
+                linear-gradient(
+                  105deg,
+                  transparent 40%,
+                  rgba(255, 255, 255, 0.1) 45%,
+                  rgba(255, 255, 255, 0.15) 50%,
+                  rgba(255, 255, 255, 0.1) 55%,
+                  transparent 60%
+                )
+              `,
+                            backgroundSize: '300% 300%',
+                            backgroundPosition: isHovering ? '100% 50%' : '0% 50%',
+                            transition: 'background-position 0.8s ease',
+                            mixBlendMode: 'overlay',
+                        }}
+                    />
+
+                    {/* Rainbow Holographic Overlay */}
+                    <div
+                        className="absolute inset-0 pointer-events-none z-[5] opacity-0 transition-opacity duration-500"
+                        style={{
+                            opacity: isHovering ? 0.15 : 0,
+                            background: `
+                conic-gradient(
+                  from 0deg at 50% 50%,
+                  #ff6b6b,
+                  #ffd93d,
+                  #6bcb77,
+                  #4d96ff,
+                  #9b59b6,
+                  #ff6b6b
+                )
+              `,
+                            animation: 'rainbowSpin 3s linear infinite',
+                            mixBlendMode: 'overlay',
+                        }}
+                    />
+
+                    {/* Rainbow Glow saat hover */}
+                    <div
+                        className="absolute inset-0 pointer-events-none rounded-2xl transition-opacity duration-300 z-[4]"
+                        style={{
+                            opacity: isHovering ? 0.6 : 0,
+                            background: `radial-gradient(
+                ellipse at ${50 + rotateY * 3}% ${50 - rotateX * 3}%,
+                rgba(255, 107, 107, 0.2),
+                rgba(255, 217, 61, 0.2),
+                rgba(107, 203, 119, 0.2),
+                rgba(77, 150, 255, 0.2),
+                rgba(155, 89, 182, 0.2)
+              )`,
+                            filter: 'blur(20px)',
+                        }}
+                    />
+
                     {/* 3D Glow effect mengikuti kursor */}
                     <div
-                        className="absolute inset-0 pointer-events-none rounded-2xl transition-opacity duration-300"
+                        className="absolute inset-0 pointer-events-none rounded-2xl transition-opacity duration-300 z-[6]"
                         style={{
-                            opacity: isHovering ? 0.4 : 0,
+                            opacity: isHovering ? 0.3 : 0,
                             background: `radial-gradient(
-                                ellipse at ${50 + rotateY * 3}% ${50 - rotateX * 3}%,
-                                rgba(59, 130, 246, 0.3) 0%,
-                                transparent 60%
-                            )`,
+                ellipse at ${50 + rotateY * 3}% ${50 - rotateX * 3}%,
+                rgba(255, 255, 255, 0.15) 0%,
+                transparent 60%
+              )`,
                         }}
                     />
 
@@ -183,38 +240,38 @@ export default function ProfileCard({
                         />
 
                         {/* Gradient overlay */}
-                        <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-blue-500/5 pointer-events-none" />
+                        <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-blue-500/5 pointer-events-none z-[7]" />
 
                         {/* Outer glow saat hover */}
                         <div
-                            className={`absolute inset-[-4px] rounded-2xl transition-opacity duration-300 pointer-events-none ${isHovering ? 'opacity-100' : 'opacity-0'
+                            className={`absolute inset-[-4px] rounded-2xl transition-opacity duration-300 pointer-events-none z-[3] ${isHovering ? 'opacity-100' : 'opacity-0'
                                 }`}
                             style={{
-                                background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(56, 189, 248, 0.15))',
+                                background: 'linear-gradient(135deg, rgba(255,107,107,0.3), rgba(77,150,255,0.3), rgba(155,89,182,0.3))',
                                 filter: 'blur(12px)',
                             }}
                         />
 
-                        {/* Corner Accents */}
-                        <div className="absolute top-3 left-3 w-5 h-5 border-t-2 border-l-2 border-white/20 rounded-tl" />
-                        <div className="absolute top-3 right-3 w-5 h-5 border-t-2 border-r-2 border-white/20 rounded-tr" />
-                        <div className="absolute bottom-3 left-3 w-5 h-5 border-b-2 border-l-2 border-white/20 rounded-bl" />
-                        <div className="absolute bottom-3 right-3 w-5 h-5 border-b-2 border-r-2 border-white/20 rounded-br" />
+                        {/* Corner Accents - Rainbow */}
+                        <div className="absolute top-3 left-3 w-5 h-5 border-t-2 border-l-2 border-white/30 rounded-tl z-[8]" />
+                        <div className="absolute top-3 right-3 w-5 h-5 border-t-2 border-r-2 border-white/30 rounded-tr z-[8]" />
+                        <div className="absolute bottom-3 left-3 w-5 h-5 border-b-2 border-l-2 border-white/30 rounded-bl z-[8]" />
+                        <div className="absolute bottom-3 right-3 w-5 h-5 border-b-2 border-r-2 border-white/30 rounded-br z-[8]" />
 
                         {/* ID Card Label */}
-                        <div className="absolute top-3 left-1/2 -translate-x-1/2">
-                            <span className="text-[6px] font-bold text-white/30 tracking-widest uppercase">
+                        <div className="absolute top-3 left-1/2 -translate-x-1/2 z-[8]">
+                            <span className="text-[6px] font-bold text-white/40 tracking-widest uppercase">
                                 ID CARD
                             </span>
                         </div>
 
-                        {/* Nama di bawah - dengan background opacity 50% */}
-                        <div className="absolute bottom-4 left-0 right-0 text-center px-2">
-                            <div className="inline-block px-4 py-1.5 rounded-lg bg-navy-950/50 backdrop-blur-sm">
+                        {/* Nama & Title dengan Background */}
+                        <div className="absolute bottom-4 left-0 right-0 text-center px-2 z-[8]">
+                            <div className="inline-block px-4 py-1.5 rounded-lg bg-navy-950/60 backdrop-blur-sm border border-white/10">
                                 <p className="text-[15px] font-semibold text-white/90 tracking-wide">
                                     {name.toUpperCase()}
                                 </p>
-                                <p className="text-[10px] text-blue-400/80 tracking-wider">
+                                <p className="text-[12px] text-blue-400/80 tracking-wider">
                                     {title.toUpperCase()}
                                 </p>
                             </div>
@@ -222,18 +279,29 @@ export default function ProfileCard({
                     </div>
 
                     {/* Footer */}
-                    <div className="bg-navy-950/50 px-6 py-2 border-t border-navy-600 flex justify-between">
+                    <div className="bg-navy-950/50 px-6 py-2 border-t border-navy-600 flex justify-between relative z-[8]">
                         <span className="text-[8px] text-gray-500 tracking-widest uppercase">
-                            •••• •••• •••• 2021
+                            •••• •••• •••• 2024
                         </span>
                         <span className="text-[8px] text-gray-500 tracking-widest uppercase">
                             {new Date().getFullYear()}
                         </span>
                     </div>
-
-
                 </div>
             </motion.div>
+
+            {/* CSS Animations */}
+            <style>{`
+        @keyframes rainbowBorder {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+        @keyframes rainbowSpin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+      `}</style>
         </motion.div>
     );
 }

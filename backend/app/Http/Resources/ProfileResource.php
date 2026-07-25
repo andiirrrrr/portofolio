@@ -18,6 +18,7 @@ class ProfileResource extends JsonResource
             'location' => $this->location,
             'bio' => $this->bio,
             'profile_image' => $this->profile_image ? url('storage/' . $this->profile_image) : null,
+            'lanyard_image' => $this->lanyard_image ? url('storage/' . $this->lanyard_image) : null,
             'cv_file' => $this->cv_file ? url('storage/' . $this->cv_file) : null,
             'github_url' => $this->github_url,
             'linkedin_url' => $this->linkedin_url,

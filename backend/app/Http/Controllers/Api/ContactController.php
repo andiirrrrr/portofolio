@@ -24,6 +24,32 @@ class ContactController extends ApiController
         return $this->paginated($contacts, ContactResource::collection($contacts));
     }
 
+    public function chatMessages(Request $request)
+    {
+        $limit = $request->integer('limit', 50);
+        $since = $request->get('since'); // ISO timestamp, untuk hanya ambil pesan baru
+
+        $query = Contact::where('subject', 'Chat Room Message');
+
+        if ($since) {
+            $query->where('created_at', '>', $since);
+        }
+
+        $messages = $query->orderBy('created_at', 'asc')
+            ->limit(min($limit, 100))
+            ->get();
+
+        return $this->success(
+            $messages->map(fn($m) => [
+                'id'        => (string) $m->id,
+                'name'      => $m->name,
+                'message'   => $m->message,
+                'timestamp' => $m->created_at->toISOString(),
+            ]),
+            'Chat messages fetched'
+        );
+    }
+
     public function store(ContactRequest $request)
     {
         $contact = Contact::create($request->validated());

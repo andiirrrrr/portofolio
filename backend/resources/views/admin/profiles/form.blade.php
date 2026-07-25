@@ -52,18 +52,53 @@
                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
             </div>
             <div>
-                <label class="block text-gray-700 mb-2">Profile Image</label>
-                <input type="file" 
-                       name="profile_image" 
+                <label class="block text-gray-700 mb-2">Profile Image <span class="text-sm text-gray-400">(Untuk About)</span></label>
+                <input type="file"
+                       name="profile_image"
+                       accept="image/jpeg,image/png,image/jpg"
+                       onchange="previewImage(this, 'preview-profile')"
                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
                 @if(isset($profile) && $profile->profile_image)
-                    <p class="mt-2 text-sm text-gray-500">Current: {{ basename($profile->profile_image) }}</p>
+                    <div class="mt-2">
+                        <p class="text-sm text-gray-500 mb-1">Current:</p>
+                        <img id="preview-profile"
+                             src="{{ asset('storage/' . $profile->profile_image) }}"
+                             alt="Profile Image"
+                             class="h-24 w-24 object-cover rounded-full border-2 border-gray-200">
+                    </div>
+                @else
+                    <img id="preview-profile" class="mt-2 h-24 w-24 object-cover rounded-full border-2 border-gray-200 hidden">
                 @endif
             </div>
+
+            <div>
+                <label class="block text-gray-700 mb-2">
+                    Lanyard Card Photo
+                    <span class="text-sm text-gray-400">(Untuk Kartu ID 3D di Hero)</span>
+                </label>
+                <input type="file"
+                       name="lanyard_image"
+                       accept="image/jpeg,image/png,image/jpg,image/webp"
+                       onchange="previewImage(this, 'preview-lanyard')"
+                       class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
+                @if(isset($profile) && $profile->lanyard_image)
+                    <div class="mt-2">
+                        <p class="text-sm text-gray-500 mb-1">Current:</p>
+                        <img id="preview-lanyard"
+                             src="{{ asset('storage/' . $profile->lanyard_image) }}"
+                             alt="Lanyard Image"
+                             class="h-32 w-24 object-cover rounded-lg border-2 border-blue-200 shadow">
+                    </div>
+                @else
+                    <img id="preview-lanyard" class="mt-2 h-32 w-24 object-cover rounded-lg border-2 border-blue-200 shadow hidden">
+                @endif
+                <p class="mt-1 text-xs text-gray-400">💡 Foto ini tampil di kartu ID 3D (lanyard) pada halaman utama. Gunakan foto beresolusi tinggi (rasio vertikal 3:4 atau 1:1, max 5MB) untuk hasil tajam (HD).</p>
+            </div>
+
             <div>
                 <label class="block text-gray-700 mb-2">CV File</label>
-                <input type="file" 
-                       name="cv_file" 
+                <input type="file"
+                       name="cv_file"
                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
                 @if(isset($profile) && $profile->cv_file)
                     <p class="mt-2 text-sm text-gray-500">Current: {{ basename($profile->cv_file) }}</p>
@@ -138,4 +173,18 @@
         </div>
     </form>
 </div>
+
+<script>
+function previewImage(input, previewId) {
+    const preview = document.getElementById(previewId);
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            preview.src = e.target.result;
+            preview.classList.remove('hidden');
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+</script>
 @endsection

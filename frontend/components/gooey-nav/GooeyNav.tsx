@@ -17,6 +17,8 @@ interface GooeyNavProps {
     timeVariance?: number;
     colors?: number[];
     initialActiveIndex?: number;
+    activeIndex?: number;  // ← Tambahkan controlled
+    onItemClick?: (e: React.MouseEvent<HTMLAnchorElement>, href: string, index: number) => void;
 }
 
 const GooeyNav = ({
@@ -27,13 +29,22 @@ const GooeyNav = ({
     particleR = 100,
     timeVariance = 300,
     colors = [1, 2, 3, 1, 2, 3, 1, 4],
-    initialActiveIndex = 0
+    initialActiveIndex = 0,
+    activeIndex: controlledActiveIndex,  // ← Controlled dari parent
+    onItemClick
 }: GooeyNavProps) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const navRef = useRef<HTMLUListElement>(null);
     const filterRef = useRef<HTMLSpanElement>(null);
     const textRef = useRef<HTMLSpanElement>(null);
-    const [activeIndex, setActiveIndex] = useState(initialActiveIndex);
+    const [internalActiveIndex, setInternalActiveIndex] = useState(initialActiveIndex);
+
+    // Gunakan controlled jika ada,否则 pakai internal
+    const activeIndex = controlledActiveIndex !== undefined ? controlledActiveIndex : internalActiveIndex;
+    const setActiveIndex = controlledActiveIndex !== undefined
+        ? (index: number) => { }  // Controlled, update dari parent
+        : setInternalActiveIndex;
+
     const router = useRouter();
 
     const noise = (n = 1) => n / 2 - Math.random() * n;
@@ -92,7 +103,6 @@ const GooeyNav = ({
         }
     };
 
-    // Use GPU hardware accelerated translate3d to eliminate reflow jitter and vibrations
     const updateEffectPosition = (element: HTMLElement) => {
         if (!containerRef.current || !filterRef.current || !textRef.current) return;
         const containerRect = containerRef.current.getBoundingClientRect();
@@ -121,7 +131,35 @@ const GooeyNav = ({
 
         const href = items[index].href;
 
-        // HOME: Scroll ke paling atas
+        // Panggil onItemClick jika ada (untuk controlled dari parent)
+        if (onItemClick) {
+            onItemClick(e, href, index);
+            // Efek particle tetap jalan
+            if (filterRef.current) {
+                const particles = filterRef.current.querySelectorAll('.particle');
+                particles.forEach(p => filterRef.current!.removeChild(p));
+                makeParticles(filterRef.current);
+            }
+            if (textRef.current) {
+                textRef.current.classList.remove('active');
+                void textRef.current.offsetWidth;
+                textRef.current.classList.add('active');
+            }
+            // Scroll ke target
+            if (href === '/') {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else if (href.includes('#')) {
+                const targetId = href.split('#')[1];
+                const element = document.getElementById(targetId);
+                if (element) {
+                    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }
+            return;
+        }
+
+        // Default behavior (jika tidak ada onItemClick)
+        // HOME
         if (href === '/') {
             window.scrollTo({ top: 0, behavior: 'smooth' });
             setActiveIndex(index);
@@ -139,7 +177,7 @@ const GooeyNav = ({
             return;
         }
 
-        // ABOUT (#about): Scroll ke section
+        // ABOUT, PORTFOLIO, CONTACT (#section)
         if (href.includes('#')) {
             const targetId = href.split('#')[1];
             setActiveIndex(index);
@@ -198,12 +236,50 @@ const GooeyNav = ({
         }
     };
 
+    // ScrollSpy: Update active index berdasarkan scroll
+    useEffect(() => {
+        const handleScroll = () => {
+            if (typeof window === 'undefined') return;
+
+            // Daftar section dengan urutan
+            const sectionMap = [
+                { id: 'home', index: 0 },
+                { id: 'about', index: 1 },
+                { id: 'portfolio', index: 2 },
+                { id: 'contact', index: 3 },
+            ];
+
+            const scrollY = window.scrollY + 200;
+
+            // Cari section yang sedang aktif
+            let activeSectionIndex = 0;
+            for (let i = sectionMap.length - 1; i >= 0; i--) {
+                const section = document.getElementById(sectionMap[i].id);
+                if (section && section.offsetTop <= scrollY) {
+                    activeSectionIndex = sectionMap[i].index;
+                    break;
+                }
+            }
+
+            // Update jika controlled (dari parent) atau internal
+            if (controlledActiveIndex !== undefined) {
+                // Controlled - parent yang handle
+            } else {
+                setInternalActiveIndex(activeSectionIndex);
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, [controlledActiveIndex]);
+
     useEffect(() => {
         if (!navRef.current || !containerRef.current) return;
         const activeLi = navRef.current.querySelectorAll('li')[activeIndex];
         if (activeLi) {
             updateEffectPosition(activeLi);
             textRef.current?.classList.add('active');
+            filterRef.current?.classList.add('active');
         }
         const resizeObserver = new ResizeObserver(() => {
             const currentActiveLi = navRef.current?.querySelectorAll('li')[activeIndex];
@@ -250,13 +326,15 @@ const GooeyNav = ({
             position: absolute;
             inset: 0;
             background: white;
-            transform: scale(0);
-            opacity: 0;
+            transform: scale(1);
+            opacity: 1;
             z-index: -1;
             border-radius: 9999px;
+            transition: transform 0.3s ease, opacity 0.3s ease;
           }
           .effect.active::after {
-            animation: pill 0.3s ease both;
+            transform: scale(1);
+            opacity: 1;
           }
           @keyframes pill {
             to {
@@ -335,7 +413,6 @@ const GooeyNav = ({
             color: transparent;
             text-shadow: none;
           }
-          /* Hapus background kotak ganda pada li::after untuk mencegah kerutan/getaran sudut */
           li::after {
             display: none !important;
           }
@@ -372,7 +449,6 @@ const GooeyNav = ({
                 <span className="effect filter" ref={filterRef} />
                 <span className="effect text" ref={textRef} />
 
-                {/* SVG Filter Gooey cair murni yang diproses di GPU (stdDeviation optimal 4) */}
                 <svg style={{ position: 'absolute', width: 0, height: 0, pointerEvents: 'none' }} aria-hidden="true">
                     <defs>
                         <filter id="gooey-nav-filter">

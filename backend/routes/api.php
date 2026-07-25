@@ -35,6 +35,7 @@ Route::prefix('v1')->group(function () {
     Route::get('/blogs/{blog}', [BlogController::class, 'show']);
     Route::get('/blogs/categories', [BlogController::class, 'categories']);
     Route::post('/contacts', [ContactController::class, 'store']);
+    Route::get('/chat-messages', [ContactController::class, 'chatMessages']);
 
     // PROTECTED ROUTES (require auth)
     Route::middleware('auth:api')->group(function () {

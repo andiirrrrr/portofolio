@@ -33,12 +33,20 @@ trait ApiResponseTrait
     /**
      * Paginated Response
      */
-    protected function paginated($data, string $message = 'Success', int $code = 200): JsonResponse
+    protected function paginated($data, $resource = null, string $message = 'Success', int $code = 200): JsonResponse
     {
+        $items = $data->items();
+        
+        if ($resource instanceof \Illuminate\Http\Resources\Json\AnonymousResourceCollection || is_array($resource)) {
+            $items = $resource;
+        } elseif (is_string($resource)) {
+            $message = $resource;
+        }
+
         return response()->json([
             'status' => 'success',
             'message' => $message,
-            'data' => $data->items(),
+            'data' => $items,
             'pagination' => [
                 'current_page' => $data->currentPage(),
                 'last_page' => $data->lastPage(),

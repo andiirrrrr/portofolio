@@ -17,6 +17,7 @@ class Profile extends Model
         'location',
         'bio',
         'profile_image',
+        'lanyard_image',
         'cv_file',
         'github_url',
         'linkedin_url',
