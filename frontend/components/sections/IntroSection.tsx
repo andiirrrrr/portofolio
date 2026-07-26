@@ -155,7 +155,11 @@ export default function IntroSection({ profile }: IntroSectionProps) {
 
           {/* LANYARD 3D KANAN */}
           {/* Tinggi dikurangi di mobile agar tidak mendominasi layar kecil */}
-          <div className="w-full h-[380px] sm:h-[450px] md:h-[550px] lg:h-[680px] mt-2 sm:mt-4 lg:-mt-16 flex items-center justify-center">
+          <div
+            className="w-full h-[380px] sm:h-[450px] md:h-[550px] lg:h-[680px] mt-2 sm:mt-4 lg:-mt-16 flex items-center justify-center select-none touch-none"
+            style={{ WebkitTouchCallout: 'none', WebkitUserSelect: 'none' }}
+            onContextMenu={(e) => e.preventDefault()}
+          >
             {shouldRender3D ? (
               <Lanyard
                 position={[0, 0, 13]}

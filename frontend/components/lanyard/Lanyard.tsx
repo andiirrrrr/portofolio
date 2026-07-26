@@ -129,12 +129,33 @@ export default function Lanyard({
     return () => observer.disconnect();
   }, []);
 
+  // Blokir long-press copy / context menu di mobile saat drag Lanyard
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    const blockContext = (e: Event) => e.preventDefault();
+    el.addEventListener('contextmenu', blockContext);
+    el.addEventListener('selectstart', blockContext);
+
+    return () => {
+      el.removeEventListener('contextmenu', blockContext);
+      el.removeEventListener('selectstart', blockContext);
+    };
+  }, []);
+
   return (
     <div
       ref={containerRef}
-      className={`relative z-0 w-full h-full flex justify-center items-center transition-opacity duration-700 ease-out ${
+      className={`relative z-0 w-full h-full flex justify-center items-center select-none touch-none transition-opacity duration-700 ease-out ${
         ready ? 'opacity-100' : 'opacity-0'
       }`}
+      style={{
+        WebkitUserSelect: 'none',
+        WebkitTouchCallout: 'none',
+        userSelect: 'none',
+        touchAction: 'none',
+      }}
     >
       <Canvas
         camera={{ position, fov }}
@@ -143,9 +164,25 @@ export default function Lanyard({
         gl={{ alpha: transparent, preserveDrawingBuffer: false, antialias: !isMobile }}
         onCreated={({ gl }) => {
           gl.setClearColor(new THREE.Color(0x000000), transparent ? 0 : 1);
+          const canvas = gl.domElement;
+          canvas.style.touchAction = 'none';
+          canvas.style.userSelect = 'none';
+          (canvas.style as CSSStyleDeclaration & { webkitUserSelect?: string }).webkitUserSelect = 'none';
+          (canvas.style as any).webkitTouchCallout = 'none';
           requestAnimationFrame(() => setReady(true));
         }}
-        style={{ width: '100%', height: '100%' }}
+        onPointerDown={(e) => {
+          // Cegah menu native (copy/share) saat tekan-tahan di HP
+          e.preventDefault();
+        }}
+        style={{
+          width: '100%',
+          height: '100%',
+          touchAction: 'none',
+          userSelect: 'none',
+          WebkitUserSelect: 'none',
+          WebkitTouchCallout: 'none',
+        }}
       >
         <Suspense fallback={null}>
           <ambientLight intensity={Math.PI} />
@@ -441,6 +478,9 @@ function Band({
               drag(false);
             }}
             onPointerDown={(e: any) => {
+              e.stopPropagation?.();
+              // Hindari callout/copy di iOS saat mulai drag kartu
+              if (e.nativeEvent?.preventDefault) e.nativeEvent.preventDefault();
               e.target.setPointerCapture(e.pointerId);
               drag(
                 new THREE.Vector3()
