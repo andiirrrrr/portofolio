@@ -7,6 +7,7 @@ import Aurora from '@/components/aurora/Aurora';
 import AnimatedSection from '@/components/animations/AnimatedSection';
 import { getImageUrl } from '@/lib/api';
 import { getSkillIcon } from '@/lib/skillIcons';
+import { PLACEHOLDER_IMAGE } from '@/lib/placeholders';
 import { Project, Certificate, Skill } from '@/types';
 
 const ChromaGrid = dynamic(() => import('@/components/chroma-grid/ChromaGrid'), {
@@ -59,7 +60,7 @@ export default function ShowcaseSection({
           setIsVisible(true);
         }
       },
-      { rootMargin: '300px' }
+      { rootMargin: '250px' }
     );
 
     observer.observe(el);
@@ -125,7 +126,7 @@ export default function ShowcaseSection({
                   ];
                   const color = colors[index % colors.length];
                   return {
-                    image: getImageUrl(p.thumbnail, 'https://i.pravatar.cc/300?img=8'),
+                    image: getImageUrl(p.thumbnail, PLACEHOLDER_IMAGE),
                     title: p.title,
                     subtitle: p.category || 'Uncategorized',
                     borderColor: color,
@@ -170,7 +171,7 @@ export default function ShowcaseSection({
                   ];
                   const color = colors[index % colors.length];
                   return {
-                    image: getImageUrl(c.image, 'https://i.pravatar.cc/300?img=8'),
+                    image: getImageUrl(c.image, PLACEHOLDER_IMAGE),
                     title: c.name,
                     subtitle: c.issuer,
                     handle: c.issued_date

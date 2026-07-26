@@ -31,7 +31,7 @@ export default function AboutSection({ profile, experiences, educations }: About
           setIsVisible(true);
         }
       },
-      { rootMargin: '300px' }
+      { rootMargin: '250px' }
     );
 
     observer.observe(el);
@@ -48,7 +48,7 @@ export default function AboutSection({ profile, experiences, educations }: About
   ].filter((link) => link.url);
 
   return (
-    <section ref={sectionRef} id="about" className="py-16 md:py-20 px-4 bg-navy-950 overflow-visible relative">
+    <section ref={sectionRef} className="py-16 md:py-20 px-4 bg-navy-950 overflow-visible relative">
       {isVisible && (
         <Aurora
           colorStops={['#061222', '#123249', '#2D5B75']}

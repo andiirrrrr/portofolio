@@ -4,7 +4,8 @@
 
 @layer base {
   html {
-    /* scroll-behavior dihandle oleh JS Navbar agar tidak konflik */
+    /* Native scroll — jangan pakai scroll-behavior:smooth di html (terasa lag/kaku).
+       Smooth scroll hanya via JS di Navbar saat klik menu. */
   }
 
   body {
@@ -13,15 +14,11 @@
 
   main {
     /* Hanya opacity fade — tidak ada translateY agar tidak loncat saat refresh */
-    animation: pageEnter 0.4s ease-out both;
+    animation: pageEnter 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
   }
 
-  /* Skip rendering off-screen sections until needed — huge scroll perf win */
-  section {
-    content-visibility: auto;
-    /* Estimate intrinsic size so layout doesn't shift on reveal */
-    contain-intrinsic-size: 0 600px;
-  }
+  /* Jangan pakai content-visibility:auto di section —
+     menyebabkan layout jump & stutter saat scroll. */
 }
 
 @layer utilities {

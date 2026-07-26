@@ -43,10 +43,15 @@ export default function ParallaxHero() {
         return () => window.removeEventListener('resize', checkMobile);
     }, []);
 
-    // Scroll indicator visibility
+    // Scroll indicator — hindari setState berulang tiap pixel
     useEffect(() => {
+        let prev = true;
         const handleScroll = () => {
-            setIsScrollVisible(window.scrollY < 100);
+            const next = window.scrollY < 100;
+            if (next !== prev) {
+                prev = next;
+                setIsScrollVisible(next);
+            }
         };
         window.addEventListener('scroll', handleScroll, { passive: true });
         return () => window.removeEventListener('scroll', handleScroll);

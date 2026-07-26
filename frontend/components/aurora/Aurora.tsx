@@ -135,22 +135,23 @@ export default function Aurora({
         const ctn = ctnDom.current;
         if (!ctn) return;
 
+        // Detect mobile for resolution / FPS downscaling
+        const isMobileDevice = () =>
+            window.innerWidth < 768 || 'ontouchstart' in window;
+
         // antialias: false = massive GPU savings (invisible diff on shader backgrounds)
         const renderer = new Renderer({
             alpha: true,
             premultipliedAlpha: true,
             antialias: false,
-            // Cap DPR to 1.5 — prevents shader from rendering at 3× on retina/mobile
-            dpr: Math.min(window.devicePixelRatio || 1, 1.5),
+            // Cap DPR — lower on mobile to reduce fill-rate cost
+            dpr: Math.min(window.devicePixelRatio || 1, isMobileDevice() ? 1 : 1.5),
         });
         const gl = renderer.gl;
         gl.clearColor(0, 0, 0, 0);
         gl.enable(gl.BLEND);
         gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
         gl.canvas.style.backgroundColor = 'transparent';
-
-        // Detect mobile for resolution downscaling
-        const isMobileDevice = () => window.innerWidth < 768 || 'ontouchstart' in window;
 
         let program: Program;
 
@@ -204,7 +205,9 @@ export default function Aurora({
         let animateId = 0;
         let isVisible = true;
         let lastTime = 0;
-        const FPS_CAP = 30; // 30fps is enough for a background shader
+        const mobile = isMobileDevice();
+        // Background shader: slightly lower FPS on mobile — same look, less heat
+        const FPS_CAP = mobile ? 20 : 30;
         const FRAME_INTERVAL = 1000 / FPS_CAP;
 
         const update = (t: number) => {

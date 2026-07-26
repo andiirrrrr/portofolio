@@ -27,6 +27,7 @@ export default function ChatRoom() {
     const [isShared, setIsShared] = useState(false);
     const [isInitialLoading, setIsInitialLoading] = useState(true);
     const [isSectionVisible, setIsSectionVisible] = useState(false);
+    const [auroraReady, setAuroraReady] = useState(false);
     const chatBoxRef = useRef<HTMLDivElement>(null);
     const sectionRef = useRef<HTMLElement>(null);
     const lastTimestampRef = useRef<string | null>(null);
@@ -39,11 +40,12 @@ export default function ChatRoom() {
 
         const observer = new IntersectionObserver(
             ([entry]) => {
+                setIsSectionVisible(entry.isIntersecting);
                 if (entry.isIntersecting) {
-                    setIsSectionVisible(true);
+                    setAuroraReady(true);
                 }
             },
-            { rootMargin: '300px' }
+            { rootMargin: '250px' }
         );
 
         observer.observe(el);
@@ -210,8 +212,8 @@ export default function ChatRoom() {
     };
 
     return (
-        <section ref={sectionRef} className="py-16 md:py-20 px-4 bg-navy-950 relative overflow-hidden" id="contact">
-            {isSectionVisible && (
+        <section ref={sectionRef} className="py-16 md:py-20 px-4 bg-navy-950 relative overflow-hidden">
+            {auroraReady && (
                 <Aurora
                     colorStops={['#061222', '#123249', '#2D5B75']}
                     speed={0.5}
@@ -225,7 +227,8 @@ export default function ChatRoom() {
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: false, amount: 0.15 }}
+                    viewport={{ once: true, amount: 0.15 }}
+                    transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
                     className="text-center mb-8"
                 >
                     <span className="inline-block px-4 py-1.5 bg-blue-500/20 text-blue-300 rounded-full text-sm font-medium mb-3">
@@ -241,10 +244,10 @@ export default function ChatRoom() {
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
                     {/* LEFT: Chat Room */}
                     <motion.div
-                        initial={{ opacity: 0, y: 30, filter: 'blur(8px)' }}
-                        whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                        initial={{ opacity: 0, y: 28 }}
+                        whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                        transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
                     >
                         <div className="bg-navy-800/80 rounded-2xl border border-navy-700 backdrop-blur-sm overflow-hidden flex flex-col hover:border-blue-500/30 transition-all duration-500 shadow-xl">
                             {/* Chat Header */}
@@ -412,10 +415,10 @@ export default function ChatRoom() {
 
                     {/* RIGHT: Contact Form */}
                     <motion.div
-                        initial={{ opacity: 0, y: 30, rotateX: 15 }}
+                        initial={{ opacity: 0, y: 28, rotateX: 12 }}
                         whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
                         viewport={{ once: true }}
-                        transition={{ duration: 0.6, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+                        transition={{ duration: 0.7, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
                     >
                         <div className="bg-navy-800/80 rounded-2xl p-6 md:p-8 border border-navy-700 backdrop-blur-sm hover:border-cyan-500/30 transition-all duration-500 shadow-xl">
                             <h3 className="text-xl font-bold text-white mb-1">Contact Form</h3>

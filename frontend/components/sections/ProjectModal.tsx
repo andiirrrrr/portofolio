@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ExternalLink, Sparkles } from 'lucide-react';
 import { FaGithub } from 'react-icons/fa6';
@@ -13,10 +14,22 @@ interface ProjectModalProps {
 }
 
 export default function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
+  useEffect(() => {
+    if (!isOpen) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [isOpen, onClose]);
+
   return (
     <AnimatePresence>
       {isOpen && project && (
         <motion.div
+          role="dialog"
+          aria-modal="true"
+          aria-label={project.title}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -33,7 +46,9 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
           >
             {/* Close Button */}
             <button
+              type="button"
               onClick={onClose}
+              aria-label="Tutup modal"
               className="absolute top-4 right-4 z-10 p-2 bg-navy-800/80 hover:bg-navy-700 rounded-full text-gray-400 hover:text-white transition-all duration-300 border border-navy-600"
             >
               <X size={20} />

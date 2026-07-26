@@ -36,25 +36,18 @@ export default function IntroSection({ profile }: IntroSectionProps) {
     const el = sectionRef.current;
     if (!el) return;
 
-    // Load 3D lanyard & background shaders when user scrolls near this section
+    // Load 3D once when near viewport — jangan unmount saat scroll (menyebabkan hitch/kaku)
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setShouldRender3D(true);
         }
       },
-      { rootMargin: '300px' }
+      { rootMargin: '250px' }
     );
 
     observer.observe(el);
-
-    // Fallback: defer 3D loading by 1.5s so ParallaxHero entrance completes smoothly
-    const timer = setTimeout(() => setShouldRender3D(true), 1500);
-
-    return () => {
-      observer.disconnect();
-      clearTimeout(timer);
-    };
+    return () => observer.disconnect();
   }, []);
 
   return (
@@ -166,7 +159,7 @@ export default function IntroSection({ profile }: IntroSectionProps) {
             {shouldRender3D ? (
               <Lanyard
                 position={[0, 0, 13]}
-                gravity={[0, -40, 0]}
+                gravity={[0, -32, 0]}
                 fov={34}
                 frontImage={getImageUrl(
                   profile?.lanyard_image ?? profile?.profile_image,

@@ -12,31 +12,26 @@ const navItems = [
     { label: 'Contact', href: '/#contact' },
 ];
 
+const SECTION_IDS = ['home', 'about', 'portfolio', 'contact'] as const;
+
+/** Posisi dokumen yang akurat (bukan offsetTop yang bisa relatif ke parent) */
+function getDocumentTop(el: HTMLElement) {
+    return el.getBoundingClientRect().top + window.scrollY;
+}
+
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
     const [activeIndex, setActiveIndex] = useState(0);
-    // Simpan activeIndex di ref agar scroll handler tidak perlu di-re-register
     const activeIndexRef = useRef(0);
 
-    // ScrollSpy untuk update active index
     useEffect(() => {
         const handleScroll = () => {
-            const isScrolled = window.scrollY > 100;
-            setScrolled(isScrolled);
+            const scrollY = window.scrollY;
+            setScrolled(scrollY > 100);
 
-            const scrollY = window.scrollY + 150; // offset untuk trigger lebih awal
-
-            // Daftar section dengan urutan
-            const sections = [
-                { id: 'home', index: 0, top: 0 },
-                { id: 'about', index: 1 },
-                { id: 'portfolio', index: 2 },
-                { id: 'contact', index: 3 },
-            ];
-
-            // Jika di paling atas (parallax hero)
-            if (window.scrollY < 200) {
+            // Dekat puncak halaman → Home
+            if (scrollY < 120) {
                 if (activeIndexRef.current !== 0) {
                     activeIndexRef.current = 0;
                     setActiveIndex(0);
@@ -44,46 +39,15 @@ export default function Navbar() {
                 return;
             }
 
-            // Cari section yang sedang aktif berdasarkan posisi scroll
+            // Marker: posisi section + offset navbar
+            const marker = scrollY + 160;
             let foundIndex = 0;
-            for (let i = sections.length - 1; i >= 0; i--) {
-                const section = document.getElementById(sections[i].id);
-                if (section) {
-                    const sectionTop = section.offsetTop;
-                    // Jika section top <= scrollY + offset
-                    if (sectionTop <= scrollY) {
-                        // Tambahkan margin untuk section berikutnya
-                        const nextSection = sections[i + 1];
-                        if (nextSection) {
-                            const nextEl = document.getElementById(nextSection.id);
-                            if (nextEl && scrollY < nextEl.offsetTop - 100) {
-                                foundIndex = sections[i].index;
-                                break;
-                            }
-                        } else {
-                            foundIndex = sections[i].index;
-                            break;
-                        }
-                    }
-                }
-            }
 
-            // Jika tidak ada section yang terdeteksi, cek berdasarkan posisi manual
-            if (foundIndex === 0 && window.scrollY > 200) {
-                // Cek apakah di about
-                const aboutEl = document.getElementById('about');
-                if (aboutEl && window.scrollY >= aboutEl.offsetTop - 150) {
-                    foundIndex = 1;
-                }
-                // Cek apakah di portfolio
-                const portfolioEl = document.getElementById('portfolio');
-                if (portfolioEl && window.scrollY >= portfolioEl.offsetTop - 150) {
-                    foundIndex = 2;
-                }
-                // Cek apakah di contact
-                const contactEl = document.getElementById('contact');
-                if (contactEl && window.scrollY >= contactEl.offsetTop - 150) {
-                    foundIndex = 3;
+            for (let i = 0; i < SECTION_IDS.length; i++) {
+                const el = document.getElementById(SECTION_IDS[i]);
+                if (!el) continue;
+                if (getDocumentTop(el) <= marker) {
+                    foundIndex = i;
                 }
             }
 
@@ -93,13 +57,18 @@ export default function Navbar() {
             }
         };
 
+        handleScroll();
         window.addEventListener('scroll', handleScroll, { passive: true });
-        return () => window.removeEventListener('scroll', handleScroll);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []); // ← dependency kosong: listener hanya didaftarkan 1x, tidak loop
+        window.addEventListener('resize', handleScroll, { passive: true });
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+            window.removeEventListener('resize', handleScroll);
+        };
+    }, []);
 
     const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string, index: number) => {
         e.preventDefault();
+        activeIndexRef.current = index;
         setActiveIndex(index);
 
         if (href === '/') {
@@ -120,7 +89,7 @@ export default function Navbar() {
         <motion.nav
             initial={{ y: -100 }}
             animate={{ y: scrolled ? 0 : -100 }}
-            transition={{ duration: 0.5, ease: 'easeInOut' }}
+            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
             className="fixed top-0 left-0 right-0 z-50 bg-navy-950/95 backdrop-blur-md border-b border-navy-700/30"
             style={{ boxShadow: 'none' }}
         >
@@ -135,6 +104,7 @@ export default function Navbar() {
                             href="/"
                             onClick={(e) => {
                                 e.preventDefault();
+                                activeIndexRef.current = 0;
                                 setActiveIndex(0);
                                 window.scrollTo({ top: 0, behavior: 'smooth' });
                             }}
@@ -163,8 +133,11 @@ export default function Navbar() {
 
                     {/* Mobile Menu Button */}
                     <motion.button
+                        type="button"
                         whileTap={{ scale: 0.9 }}
                         onClick={() => setIsOpen(!isOpen)}
+                        aria-label={isOpen ? 'Tutup menu navigasi' : 'Buka menu navigasi'}
+                        aria-expanded={isOpen}
                         className="md:hidden text-white p-2"
                     >
                         {isOpen ? <X size={24} /> : <Menu size={24} />}

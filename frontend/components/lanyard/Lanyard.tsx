@@ -9,6 +9,7 @@ import {
   CuboidCollider,
   Physics,
   RigidBody,
+  useRapier,
   useRopeJoint,
   useSphericalJoint,
 } from '@react-three/rapier';
@@ -107,6 +108,7 @@ export default function Lanyard({
     () => typeof window !== 'undefined' && window.innerWidth < 768
   );
   const [isVisible, setIsVisible] = useState(true);
+  const [ready, setReady] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -128,22 +130,28 @@ export default function Lanyard({
   }, []);
 
   return (
-    <div ref={containerRef} className="relative z-0 w-full h-full flex justify-center items-center">
+    <div
+      ref={containerRef}
+      className={`relative z-0 w-full h-full flex justify-center items-center transition-opacity duration-700 ease-out ${
+        ready ? 'opacity-100' : 'opacity-0'
+      }`}
+    >
       <Canvas
         camera={{ position, fov }}
-        dpr={[1, isMobile ? 1.2 : 2]}  // HD rendering on high-DPI screens
+        dpr={[1, isMobile ? 1.25 : 2]}
         frameloop={isVisible ? 'always' : 'never'}
         gl={{ alpha: transparent, preserveDrawingBuffer: false, antialias: !isMobile }}
-        onCreated={({ gl }) =>
-          gl.setClearColor(new THREE.Color(0x000000), transparent ? 0 : 1)
-        }
+        onCreated={({ gl }) => {
+          gl.setClearColor(new THREE.Color(0x000000), transparent ? 0 : 1);
+          requestAnimationFrame(() => setReady(true));
+        }}
         style={{ width: '100%', height: '100%' }}
       >
-        {/* Suspense is required: useGLTF and useTexture suspend while loading.
-            Without it, WebGL receives unloaded images → texSubImage2D error → context lost. */}
         <Suspense fallback={null}>
           <ambientLight intensity={Math.PI} />
-          <Physics gravity={gravity} timeStep={isMobile ? 1 / 30 : 1 / 60}>
+          {/* Mulai dengan gravity lembut; SoftGravity meramp ke target tanpa re-render */}
+          <Physics gravity={[gravity[0], gravity[1] * 0.35, gravity[2]]} timeStep={1 / 60}>
+            <SoftGravity target={gravity} durationMs={1100} />
             <Band
               isMobile={isMobile}
               frontImage={frontImage}
@@ -163,6 +171,39 @@ export default function Lanyard({
       </Canvas>
     </div>
   );
+}
+
+/** Ramp world gravity smoothly without React re-renders (avoids physics hitch) */
+function SoftGravity({
+  target,
+  durationMs = 1100,
+}: {
+  target: [number, number, number];
+  durationMs?: number;
+}) {
+  const { world } = useRapier();
+  const startRef = useRef<number | null>(null);
+  const doneRef = useRef(false);
+  const fromY = target[1] * 0.35;
+  const toY = target[1];
+
+  useFrame((state) => {
+    if (doneRef.current) return;
+    if (startRef.current === null) startRef.current = state.clock.elapsedTime * 1000;
+
+    const elapsed = state.clock.elapsedTime * 1000 - startRef.current;
+    const t = Math.min(1, elapsed / durationMs);
+    const eased = 1 - Math.pow(1 - t, 3);
+    const y = fromY + (toY - fromY) * eased;
+
+    world.gravity.x = target[0];
+    world.gravity.y = y;
+    world.gravity.z = target[2];
+
+    if (t >= 1) doneRef.current = true;
+  });
+
+  return null;
 }
 
 // Helper hook to safely verify image URLs before passing to Three.js useTexture
@@ -196,8 +237,8 @@ function useSafeImage(url: string | null | undefined, fallback: string) {
 
 // ─── Band (rope + card physics) ──────────────────────────────────
 function Band({
-  maxSpeed = 50,
-  minSpeed = 0,
+  maxSpeed = 28,
+  minSpeed = 2,
   isMobile = false,
   frontImage = null,
   backImage = null,
@@ -222,8 +263,9 @@ function Band({
     type: 'dynamic' as const,
     canSleep: true,
     colliders: false as const,
-    angularDamping: 4,
-    linearDamping: 4,
+    // Sedikit lebih redam di awal swing → drop terasa lebih soft, bukan "nyentak"
+    angularDamping: 5.5,
+    linearDamping: 5.5,
   };
 
   const safeFront = useSafeImage(frontImage, '/assets/lanyard/foto.jpeg');
@@ -352,7 +394,8 @@ function Band({
       curve.points[3].copy(fixed.current.translation());
 
       // band.current.geometry is MeshLineGeometry which has setPoints()
-      (band.current.geometry as any).setPoints(curve.getPoints(isMobile ? 16 : 32));
+      // Lebih banyak titik = tali lebih mulus saat drop
+      (band.current.geometry as any).setPoints(curve.getPoints(isMobile ? 24 : 40));
 
       ang.copy(card.current.angvel());
       rot.copy(card.current.rotation());
