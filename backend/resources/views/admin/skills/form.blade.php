@@ -66,7 +66,7 @@
                 <input type="checkbox" 
                        name="is_active" 
                        value="1"
-                       {{ isset($skill) && $skill->is_active ? 'checked' : 'checked' }}
+                       {{ old('is_active', isset($skill) ? $skill->is_active : true) ? 'checked' : '' }}
                        class="rounded border-gray-300 text-blue-600">
                 <span class="ml-2 text-gray-700">Active</span>
             </label>

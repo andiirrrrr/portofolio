@@ -38,6 +38,8 @@ class CertificateController extends Controller
             $data['image'] = $request->file('image')->store('certificates', 'public');
         }
 
+        $data['is_active'] = $request->boolean('is_active');
+
         Certificate::create($data);
 
         return redirect()->route('admin.certificates.index')
@@ -69,6 +71,8 @@ class CertificateController extends Controller
             }
             $data['image'] = $request->file('image')->store('certificates', 'public');
         }
+
+        $data['is_active'] = $request->boolean('is_active');
 
         $certificate->update($data);
 

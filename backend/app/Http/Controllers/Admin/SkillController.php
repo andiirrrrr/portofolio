@@ -31,6 +31,8 @@ class SkillController extends Controller
             'is_active' => 'nullable|boolean',
         ]);
 
+        $data['is_active'] = $request->boolean('is_active');
+
         Skill::create($data);
         return redirect()->route('admin.skills.index')
             ->with('success', 'Skill created successfully!');
@@ -52,6 +54,8 @@ class SkillController extends Controller
             'order' => 'nullable|integer|min:0',
             'is_active' => 'nullable|boolean',
         ]);
+
+        $data['is_active'] = $request->boolean('is_active');
 
         $skill->update($data);
         return redirect()->route('admin.skills.index')

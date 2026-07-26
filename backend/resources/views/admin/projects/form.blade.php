@@ -108,7 +108,7 @@
                 <input type="checkbox" 
                        name="is_featured" 
                        value="1"
-                       {{ isset($project) && $project->is_featured ? 'checked' : '' }}
+                       {{ old('is_featured', isset($project) ? $project->is_featured : false) ? 'checked' : '' }}
                        class="rounded border-gray-300 text-blue-600">
                 <span class="ml-2 text-gray-700">Featured Project</span>
             </label>
@@ -116,7 +116,7 @@
                 <input type="checkbox" 
                        name="is_active" 
                        value="1"
-                       {{ isset($project) && $project->is_active ? 'checked' : 'checked' }}
+                       {{ old('is_active', isset($project) ? $project->is_active : true) ? 'checked' : '' }}
                        class="rounded border-gray-300 text-blue-600">
                 <span class="ml-2 text-gray-700">Active</span>
             </label>

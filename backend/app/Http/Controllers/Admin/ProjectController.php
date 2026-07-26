@@ -65,6 +65,9 @@ class ProjectController extends Controller
             $data['key_features'] = null;
         }
 
+        $data['is_featured'] = $request->boolean('is_featured');
+        $data['is_active'] = $request->boolean('is_active');
+
         Project::create($data);
 
         return redirect()->route('admin.projects.index')
@@ -122,6 +125,9 @@ class ProjectController extends Controller
         } else {
             $data['key_features'] = null;
         }
+
+        $data['is_featured'] = $request->boolean('is_featured');
+        $data['is_active'] = $request->boolean('is_active');
 
         $project->update($data);
 

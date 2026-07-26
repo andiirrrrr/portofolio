@@ -74,7 +74,7 @@
                     <input type="checkbox" 
                            name="is_current" 
                            value="1"
-                           {{ isset($experience) && $experience->is_current ? 'checked' : '' }}
+                           {{ old('is_current', isset($experience) ? $experience->is_current : false) ? 'checked' : '' }}
                            class="rounded border-gray-300 text-blue-600">
                     <span class="ml-2 text-gray-700">Currently Working Here</span>
                 </label>
@@ -82,7 +82,7 @@
                     <input type="checkbox" 
                            name="is_active" 
                            value="1"
-                           {{ isset($experience) && $experience->is_active ? 'checked' : 'checked' }}
+                           {{ old('is_active', isset($experience) ? $experience->is_active : true) ? 'checked' : '' }}
                            class="rounded border-gray-300 text-blue-600">
                     <span class="ml-2 text-gray-700">Active</span>
                 </label>

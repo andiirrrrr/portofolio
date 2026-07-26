@@ -40,6 +40,9 @@ class EducationController extends Controller
             $data['institution_logo'] = $request->file('institution_logo')->store('educations', 'public');
         }
 
+        $data['is_current'] = $request->boolean('is_current');
+        $data['is_active'] = $request->boolean('is_active');
+
         Education::create($data);
 
         return redirect()->route('admin.educations.index')
@@ -73,6 +76,9 @@ class EducationController extends Controller
             }
             $data['institution_logo'] = $request->file('institution_logo')->store('educations', 'public');
         }
+
+        $data['is_current'] = $request->boolean('is_current');
+        $data['is_active'] = $request->boolean('is_active');
 
         $education->update($data);
 

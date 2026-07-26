@@ -50,6 +50,9 @@ class ExperienceController extends Controller
             $data['achievements'] = null;
         }
 
+        $data['is_current'] = $request->boolean('is_current');
+        $data['is_active'] = $request->boolean('is_active');
+
         Experience::create($data);
 
         return redirect()->route('admin.experiences.index')
@@ -93,6 +96,9 @@ class ExperienceController extends Controller
         } else {
             $data['achievements'] = null;
         }
+
+        $data['is_current'] = $request->boolean('is_current');
+        $data['is_active'] = $request->boolean('is_active');
 
         $experience->update($data);
 
