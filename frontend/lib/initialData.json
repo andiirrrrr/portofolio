@@ -15,10 +15,10 @@
         "instagram_url": "https:\/\/www.instagram.com\/andiirrrrr",
         "youtube_url": null,
         "website_url": null,
-        "about_me": "Saya adalah seorang Full-Stack Web Developer dan lulusan Teknik Informatika dari Universitas Muslim Indonesia. Saya berfokus pada pengembangan aplikasi web yang responsif, cepat, dan mudah digunakan sesuai kebutuhan bisnis.\r\n\r\nSaat ini, saya mengelola arwebstudio.id, tempat saya merancang dan membangun platform kustom\u2014mulai dari company profile, landing page, sistem POS, hingga admin dashboard.\r\n\r\nKeahlian Utama & Teknologi:\r\n\r\nBackend & Arsitektur: PHP, Laravel, MySQL, Perancangan Basis Data, Refactoring Logika Sistem\r\n\r\nFrontend & UI\/UX: React.js, Tailwind CSS, HTML5\/CSS3, Tampilan Responsif Multi-Perangkat\r\n\r\nAlat Kerja: Visual Studio Code, XAMPP\/Laragon, Git, Workflow Pemrograman Bantu AI\r\n\r\nPengalaman Kerja & Proyek:\r\n\r\nPengembangan Web Korporat: Mengelola pembaruan data serta optimasi alur kerja unggah berkas pada platform web NIPAH PARK, sehingga meningkatkan efisiensi dan kecepatan muat media.\r\n\r\nRancang Ulang Sistem Akuntansi: Memetakan dan menyusun ulang logika alur kerja sistem keuangan (termasuk menyelesaikan kendala logika sirkular pada dokumen Letter of Offer, Buku Besar, dan Laba Rugi).\r\n\r\nPengalaman Organisasi: Menjalankan fungsi pengawasan di BLM KABAMA FIKOM UMI, serta memimpin manajemen administrasi internal dan program penggalangan dana di UKM DIAFRAGMA UMI.",
+        "about_me": "Saya adalah seorang Full-Stack Web Developer dan lulusan Teknik Informatika dari Universitas Muslim Indonesia yang berfokus pada perancangan serta pembuatan aplikasi web responsif, cepat, dan terstruktur sesuai kebutuhan operasional bisnis. Melalui unit usaha arwebstudio.id, saya secara aktif merancang dan membangun berbagai platform kustom seperti company profile, landing page, sistem Point of Sale (POS), hingga dashboard admin interaktif dengan mengombinasikan keahlian backend (PHP, Laravel, MySQL, perancangan basis data) serta frontend modern (React.js, Tailwind CSS, HTML5\/CSS3). Dalam alur kerja harian, saya mengoptimalkan perkakas seperti Visual Studio Code, Git, dan lingkungan lokal Laragon yang dipadukan dengan alur pemrograman bantu AI untuk mempercepat penulisan kode, optimasi struktur data, serta memperlancar proses debugging. Rekam jejak profesional saya mencakup pengalaman magang di Kalla pada Departemen QBI, di mana saya berkontribusi dalam pembuatan website company profile, merancang use case dan flowchart analisis sistem untuk BWP System, serta menyusun tampilan seluler (mobile view) untuk Portal VPP Baruga. Selain keahlian teknis, pengalaman menjalankan fungsi pengawasan di BLM KABAMA FIKOM UMI serta memimpin manajemen administrasi dan penggalangan dana di UKM DIAFRAGMA UMI turut membentuk pribadi saya yang komunikatif, terstruktur, dan berorientasi pada penyelesaian masalah secara efisien.",
         "professional_summary": "Lulusan Teknik Informatika (S.Kom.) Universitas Muslim Indonesia dan Full-Stack Web Developer dengan pengalaman praktis membangun serta mengoptimalkan aplikasi web berbasis Laravel, React.js, Tailwind CSS, dan MySQL. Selaku pendiri arwebstudio.id, saya berpengalaman dalam meningkatkan performa platform web korporat (NIPAH PARK), merancang ulang alur logika sistem akuntansi yang kompleks, serta mengelola basis data relasional. Memiliki pola pikir analitis yang terstruktur, terbiasa menyusun dokumentasi teknis, serta berpengalaman dalam kepemimpinan dan fungsi pengawasan di organisasi kampus.",
         "created_at": "2026-07-18T09:06:05.000000Z",
-        "updated_at": "2026-07-25T15:44:45.000000Z"
+        "updated_at": "2026-07-26T09:17:05.000000Z"
     },
     "projects": [
         {
@@ -27,7 +27,7 @@
             "slug": "nafiorella-bloom",
             "category": "Company Profile",
             "short_description": "Website catalog dan landing page untuk toko bunga Nafiorella Bloom, dilengkapi fitur pemesanan via WhatsApp, katalog produk, testimoni pelanggan, dan peta lokasi interaktif.",
-            "description": "Website ini dibuat sebagai landing page dan katalog digital untuk toko bunga Nafiorella Bloom. Tujuan utamanya adalah memudahkan calon pembeli melihat pilihan produk karangan bunga serta langsung melakukan pemesanan via WhatsApp.\r\n\r\nBagian Utama Website:\r\n1. Header & Navigasi: Menu utama yang menghubungkan ke halaman Beranda, Tentang Kami, Layanan, dan Kontak.\r\n2. Banner Utama (Hero Section): Menampilkan nama brand, slogan, serta tombol aksi cepat \"Lihat Koleksi\" dan \"Konsultasi\".\r\n3. Keunggulan Layanan: Informasi poin utama seperti Bunga Segar, Desain Elegan (pilihan warna pink & putih), dan Siap Kirim.\r\n4. Katalog Produk Best Seller: Menampilkan kartu produk lengkap dengan foto, nama bouquet, ukuran, harga, serta tombol pesan langsung ke WhatsApp.\r\n5. Tentang Kami & Tim: Berisi profil usaha, visi-misi, pencapaian jumlah pelanggan, serta profil tim pengelola.\r\n6. Testimoni: Bagian ulasan dan penilaian rating dari pelanggan sebelumnya.\r\n7. Peta Lokasi & Footer: Integrasi Google Maps untuk alamat toko fisik beserta informasi jam operasional dan kontak media sosial.",
+            "description": "Website ini dibuat sebagai landing page dan katalog digital untuk toko bunga Nafiorella Bloom. Tujuan utamanya adalah memudahkan calon pembeli melihat pilihan produk karangan bunga serta langsung melakukan pemesanan via WhatsApp.\r\n\r\nBagian Utama Website:\r\n1. Header & Navigasi: Menu utama yang menghubungkan ke halaman Beranda, Tentang Kami, Layanan, dan Kontak.\r\n2. Banner Utama (Hero Section): Menampilkan nama brand, slogan, serta tombol aksi cepat \"Lihat Koleksi\" dan \"Konsultasi\".\r\n3. Keunggulan Layanan: Informasi poin utama seperti Bunga Segar, Desain Elegan (pilihan warna pink & putih), dan Siap Kirim.\r\n4. Katalog Produk Best Seller: Menampilkan kartu produk lengkap dengan foto, nama bouquet, ukuran, harga, serta tombol pesan langsung ke WhatsApp.\r\n5. Tentang Kami & Tim: Berisi profil usaha, visi-misi, pencapaian jumlah pelanggan, serta profil tim pengelola.\r\n6. Testimoni: Bagian ulasan dan penilai rating dari pelanggan sebelumnya.\r\n7. Peta Lokasi & Footer: Integrasi Google Maps untuk alamat toko fisik beserta informasi jam operasional dan kontak media sosial.",
             "thumbnail": "projects\/thumbnails\/Xe1JMYYnKuRRl08v48xW8pTb369KnfK9OskROBOh.png",
             "github_url": null,
             "demo_url": "https:\/\/nafiorellabloom.free.je\/",
@@ -52,7 +52,7 @@
             "thumbnail": "projects\/thumbnails\/fgOUiYjDLdybugcpbmTt6rAvjmSq3u0irCiwnWdt.jpg",
             "github_url": null,
             "demo_url": "https:\/\/nipahparkdemo.free.je\/",
-            "tech_stack": "[\"PHP\",\"Tailwind CSS\",\"HTML\",\"JavaScript\"]",
+            "tech_stack": "[\"PHP\",\"Tailwind CSS\",\"HTML\",\"Java Script\"]",
             "challenges": null,
             "solutions": null,
             "key_features": "[\"Parallax Scrolling Effect\",\"Desain Responsif (Multi-Device)\",\"Optimasi Aset & Performa\",\"Pengorganisasian Konten\"]",
@@ -68,7 +68,7 @@
             "title": "SMAN 21 MAKASSAR",
             "slug": "sman-21-makassar",
             "category": "E-Learning",
-            "short_description": "Platform E-Learning berbasis web untuk SMAN 21 yang mendukung kegiatan belajar mengajar digital, pengelolaan materi, penugasan, presensi, hingga rekapitulasi nilai secara terpusat dengan akses multi-role (Admin, Guru, Siswa, dan Kepala Sekolah).",
+            "short_description": "Platform E-Learning berbasis web untuk SMAN 2 yang mendukung kegiatan belajar mengajar digital, pengelolaan materi, penugasan, presensi, hingga rekapitulasi nilai secara terpusat dengan akses multi-role (Admin, Guru, Siswa, dan Kepala Sekolah).",
             "description": "Sistem E-Learning SMANSASA adalah platform pembelajaran digital berbasis web yang dirancang untuk mempermudah alur kegiatan belajar mengajar, komunikasi, evaluasi, hingga pencatatan nilai di lingkungan sekolah. Sistem ini menghubungkan tiga peran pengguna utama (Admin, Guru, dan Siswa) dalam satu database terpusat dengan hak akses yang terpisah.\r\n\r\nFungsi Utama Berdasarkan Peran:\r\n\r\n1. Admin (Administrator Utama)\r\nBertanggung jawab mengelola data dasar sekolah, seperti membuat akun pengguna, menginput biodata guru dan siswa, mendaftarkan kelas serta mata pelajaran, menyebarkan pengumuman global, dan mengunduh laporan aktivitas sistem dalam format Excel\/PDF.\r\n\r\n2. Guru (Tenaga Pendidik)\r\nMengelola kegiatan pembelajaran untuk kelas yang diampu, meliputi unggah materi (PDF\/DOC\/PPT), pembuatan tugas lengkap dengan deadline, pemeriksaan berkas jawaban siswa, pemberian nilai dan catatan evaluasi, pengelolaan kuis, pencatatan absensi harian, hingga pengaturan bobot dan rekapitulasi nilai akhir semester.\r\n\r\n3. Siswa (Peserta Didik)\r\nMengakses dan mengunduh materi pelajaran sesuai kelasnya, membaca instruksi dan mengunggah berkas tugas sebelum deadline, memantau riwayat kehadiran, serta melihat hasil penilaian dan rekap nilai akhir.\r\n\r\nSistem ini dikembangkan menggunakan framework Laravel 10 dengan arsitektur MVC dan tampilan antarmuka yang responsif agar dapat diakses dengan nyaman melalui perangkat desktop maupun seluler.",
             "thumbnail": "projects\/thumbnails\/SnsUNGVjUiZjbEHtOmcBVfGmIh49rkK272svtEGx.png",
             "github_url": null,
@@ -122,7 +122,7 @@
             "id": 2,
             "company_name": "Kalla Group (Kalla Inti Karsa)",
             "company_logo": "experiences\/MvOGVzGJFLtOUBVbRKK4RHrrEYwlzghSKIEW5VxS.jpg",
-            "position": "Quality Business Improvement",
+            "position": "Quality Business Improvment",
             "start_date": "2025-12-15T00:00:00.000000Z",
             "end_date": "2026-06-15T00:00:00.000000Z",
             "is_current": false,
@@ -138,7 +138,7 @@
     "educations": [
         {
             "id": 1,
-            "institution_name": "Universitas Muslim Indonesia",
+            "institution_name": "Universitam Muslim Indonesia",
             "institution_logo": "educations\/qiPbPTIyOC21szbF53W06QRapcnQOF0pAdF58bTw.png",
             "degree": "Sarjana Komputer (S.Kom.)",
             "field_of_study": "Teknik Informatika",
