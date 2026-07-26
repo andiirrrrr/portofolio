@@ -127,7 +127,7 @@ export default function AboutSection({ profile, experiences, educations }: About
               {profile?.cv_file && (
                 <div className="pt-2">
                   <motion.a
-                    href={profile.cv_file}
+                    href={getImageUrl(profile.cv_file)}
                     download
                     target="_blank"
                     rel="noopener noreferrer"
