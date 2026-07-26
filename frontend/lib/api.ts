@@ -89,7 +89,14 @@ export const sendChatMessage = async (data: { name: string; message: string }) =
     return res;
 };
 
-// Contact Form — real delivery via /api/contact (Laravel lokal atau email FormSubmit)
+const CONTACT_EMAIL =
+    process.env.NEXT_PUBLIC_CONTACT_EMAIL ||
+    (initialData.profile as { email?: string })?.email ||
+    '';
+
+// Contact Form:
+// - Localhost: coba Laravel dulu via /api/contact
+// - Production: FormSubmit HARUS dari browser (server/Vercel ditolak FormSubmit)
 export const sendContact = async (data: {
     name: string;
     email: string;
@@ -97,19 +104,64 @@ export const sendContact = async (data: {
     message: string;
     phone?: string;
 }) => {
-    const res = await axios.post('/api/contact', {
+    const payload = {
         name: data.name,
         email: data.email,
         subject: data.subject || 'Contact Form Message',
         message: data.message,
         phone: data.phone,
-    });
+    };
 
-    if (!res.data?.success) {
-        throw new Error(res.data?.message || 'Gagal mengirim pesan');
+    const isLocal =
+        typeof window !== 'undefined' &&
+        (window.location.hostname === 'localhost' ||
+            window.location.hostname === '127.0.0.1');
+
+    if (isLocal) {
+        try {
+            const res = await axios.post('/api/contact', payload);
+            if (res.data?.success) return res;
+        } catch {
+            // lanjut ke FormSubmit
+        }
     }
 
-    return res;
+    if (!CONTACT_EMAIL) {
+        throw new Error('Email kontak belum dikonfigurasi');
+    }
+
+    const res = await axios.post(
+        `https://formsubmit.co/ajax/${CONTACT_EMAIL}`,
+        {
+            name: payload.name,
+            email: payload.email,
+            _replyto: payload.email,
+            _subject: `[Portfolio] ${payload.subject}`,
+            message: payload.message,
+            _template: 'table',
+            _captcha: 'false',
+        },
+        {
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            timeout: 15000,
+        }
+    );
+
+    const ok = res.data?.success === true || res.data?.success === 'true';
+    if (!ok) {
+        const raw = String(res.data?.message || '');
+        if (/activat/i.test(raw)) {
+            throw new Error(
+                'Form belum diaktifkan. Cek inbox email portfolio Anda, buka email dari FormSubmit, lalu klik link aktivasi. Setelah itu coba kirim lagi.'
+            );
+        }
+        throw new Error(raw || 'Gagal mengirim pesan. Silakan coba lagi.');
+    }
+
+    return { data: { success: true, message: 'Pesan berhasil dikirim ke email!' } };
 };
 
 export default api;

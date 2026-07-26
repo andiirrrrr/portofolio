@@ -1,11 +1,10 @@
 import { NextResponse } from 'next/server';
-import initialData from '@/lib/initialData.json';
 
-const CONTACT_EMAIL =
-  process.env.CONTACT_EMAIL ||
-  (initialData.profile as { email?: string })?.email ||
-  '';
-
+/**
+ * Endpoint lokal untuk menyimpan kontak ke Laravel admin.
+ * Di Vercel/production, Contact Form mengirim lewat FormSubmit langsung dari browser
+ * (FormSubmit menolak request dari server/API route).
+ */
 async function sendViaLaravel(payload: {
   name: string;
   email: string;
@@ -34,41 +33,6 @@ async function sendViaLaravel(payload: {
   return res.json();
 }
 
-async function sendViaFormSubmit(payload: {
-  name: string;
-  email: string;
-  subject: string;
-  message: string;
-}) {
-  if (!CONTACT_EMAIL) {
-    throw new Error('CONTACT_EMAIL belum dikonfigurasi');
-  }
-
-  const res = await fetch(`https://formsubmit.co/ajax/${CONTACT_EMAIL}`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
-    },
-    body: JSON.stringify({
-      name: payload.name,
-      email: payload.email,
-      _subject: `[Portfolio] ${payload.subject}`,
-      message: payload.message,
-      _template: 'table',
-    }),
-    signal: AbortSignal.timeout(10000),
-  });
-
-  const data = await res.json().catch(() => ({}));
-
-  if (!res.ok || data.success === 'false' || data.success === false) {
-    throw new Error(data.message || 'FormSubmit gagal mengirim pesan');
-  }
-
-  return data;
-}
-
 export async function POST(req: Request) {
   try {
     const body = await req.json();
@@ -84,34 +48,13 @@ export async function POST(req: Request) {
       );
     }
 
-    const payload = { name, email, subject, message };
-
-    // Localhost / custom API: simpan ke Laravel admin bila tersedia
-    const preferLaravel =
-      process.env.CONTACT_API_URL ||
-      process.env.NEXT_PUBLIC_API_URL ||
-      process.env.NODE_ENV === 'development';
-
-    if (preferLaravel) {
-      try {
-        const data = await sendViaLaravel(payload);
-        return NextResponse.json({
-          success: true,
-          message: 'Pesan berhasil dikirim!',
-          data,
-          channel: 'laravel',
-        });
-      } catch {
-        // Fallback ke email bila Laravel lokal tidak jalan
-      }
-    }
-
-    await sendViaFormSubmit(payload);
+    const data = await sendViaLaravel({ name, email, subject, message });
 
     return NextResponse.json({
       success: true,
-      message: 'Pesan berhasil dikirim ke email!',
-      channel: 'email',
+      message: 'Pesan berhasil dikirim!',
+      data,
+      channel: 'laravel',
     });
   } catch (error: unknown) {
     const message =

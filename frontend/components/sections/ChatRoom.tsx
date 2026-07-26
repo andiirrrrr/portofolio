@@ -496,10 +496,10 @@ function ContactForm() {
                         initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0 }}
-                        className="mb-4 p-3 bg-red-500/10 border border-red-500/30 rounded-lg flex items-center gap-2 text-red-400 text-sm"
+                        className="mb-4 p-3 bg-red-500/10 border border-red-500/30 rounded-lg flex items-start gap-2 text-red-400 text-sm"
                     >
-                        <span>✗</span>
-                        <span>{errorMessage}</span>
+                        <span className="shrink-0">✗</span>
+                        <span className="leading-relaxed">{errorMessage}</span>
                     </motion.div>
                 )}
             </AnimatePresence>
