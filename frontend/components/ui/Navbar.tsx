@@ -90,11 +90,11 @@ export default function Navbar() {
             initial={{ y: -100 }}
             animate={{ y: scrolled ? 0 : -100 }}
             transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed top-0 left-0 right-0 z-50 bg-navy-950/95 backdrop-blur-md border-b border-navy-700/30"
+            className="fixed top-0 left-0 right-0 z-40 bg-navy-950/95 backdrop-blur-md border-b border-navy-700/30"
             style={{ boxShadow: 'none' }}
         >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex justify-between items-center h-20">
+                <div className="flex justify-between items-center h-14">
                     {/* Logo */}
                     <motion.div
                         whileHover={{ scale: 1.05 }}
@@ -108,7 +108,7 @@ export default function Navbar() {
                                 setActiveIndex(0);
                                 window.scrollTo({ top: 0, behavior: 'smooth' });
                             }}
-                            className="text-2xl font-bold text-white"
+                            className="text-xl font-bold text-white tracking-tight"
                         >
                             <span className="text-blue-400">Andir</span>
                             <span className="text-gray-light">.</span>
@@ -152,7 +152,7 @@ export default function Navbar() {
                 transition={{ duration: 0.3, ease: 'easeInOut' }}
                 className="md:hidden overflow-hidden"
             >
-                <div className="px-4 py-6 space-y-4 bg-navy-900/95 backdrop-blur-md">
+                <div className="px-4 py-3 space-y-2 bg-navy-900/95 backdrop-blur-md">
                     {navItems.map((item, index) => (
                         <motion.div
                             key={item.label}
@@ -166,7 +166,7 @@ export default function Navbar() {
                                     setIsOpen(false);
                                     handleNavClick(e, item.href, index);
                                 }}
-                                className={`block transition-colors duration-300 text-lg ${activeIndex === index ? 'text-blue-400' : 'text-gray-300 hover:text-white'
+                                className={`block transition-colors duration-300 text-base py-1.5 ${activeIndex === index ? 'text-blue-400' : 'text-gray-300 hover:text-white'
                                     }`}
                             >
                                 {item.label}

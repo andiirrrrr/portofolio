@@ -34,7 +34,7 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onClick={onClose}
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md"
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md"
         >
           <motion.div
             initial={{ scale: 0.9, y: 20 }}
@@ -49,7 +49,7 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
               type="button"
               onClick={onClose}
               aria-label="Tutup modal"
-              className="absolute top-4 right-4 z-10 p-2 bg-navy-800/80 hover:bg-navy-700 rounded-full text-gray-400 hover:text-white transition-all duration-300 border border-navy-600"
+              className="absolute top-3 right-3 z-10 p-2 bg-navy-800/80 hover:bg-navy-700 rounded-full text-gray-400 hover:text-white transition-all duration-300 border border-navy-600"
             >
               <X size={20} />
             </button>
