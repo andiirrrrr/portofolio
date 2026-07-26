@@ -73,10 +73,10 @@ export default function IntroSection({ profile }: IntroSectionProps) {
           <AnimatedSection direction="blur-up" delay={0.15}>
             <div className="space-y-4 md:space-y-5 pt-4 md:pt-8">
               <motion.span
-                initial={{ opacity: 0, scale: 0.8, filter: 'blur(4px)' }}
-                whileInView={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5 }}
+                transition={{ duration: 0.4 }}
                 className="inline-block px-4 py-1.5 bg-blue-500/20 text-blue-300 rounded-full text-sm font-medium border border-blue-500/30 shadow-sm"
               >
                 ✦ Introduction
@@ -84,19 +84,19 @@ export default function IntroSection({ profile }: IntroSectionProps) {
 
               <div className="space-y-1">
                 <motion.h2
-                  initial={{ opacity: 0, y: 25, filter: 'blur(3px)' }}
-                  whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.6 }}
+                  transition={{ duration: 0.5 }}
                   className="text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight"
                 >
                   Full Stack
                 </motion.h2>
                 <motion.div
-                  initial={{ opacity: 0, y: 25, filter: 'blur(3px)' }}
-                  whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: 0.15 }}
+                  transition={{ duration: 0.5, delay: 0.1 }}
                   className="text-5xl md:text-6xl lg:text-7xl font-bold"
                 >
                   <span className="text-gradient">Developer</span>

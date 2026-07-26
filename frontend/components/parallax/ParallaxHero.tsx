@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
@@ -26,6 +26,8 @@ export default function ParallaxHero() {
     const targetRef = useRef({ x: 0, y: 0 });
     const currentRef = useRef({ x: 0, y: 0 });
     const isInteractingRef = useRef(false);
+    // Pause RAF when hero is scrolled out of view — saves CPU while user reads other sections
+    const isHeroVisibleRef = useRef(true);
 
     // Hanya state yang benar-benar perlu re-render
     const [isScrollVisible, setIsScrollVisible] = useState(true);
@@ -51,6 +53,20 @@ export default function ParallaxHero() {
     }, []);
 
     // ==========================================
+    // Pause RAF when hero scrolls off-screen
+    // ==========================================
+    useEffect(() => {
+        const el = containerRef.current;
+        if (!el) return;
+        const observer = new IntersectionObserver(
+            ([entry]) => { isHeroVisibleRef.current = entry.isIntersecting; },
+            { threshold: 0 }
+        );
+        observer.observe(el);
+        return () => observer.disconnect();
+    }, []);
+
+    // ==========================================
     // RAF loop -- lerp posisi layer tanpa setState
     // ==========================================
     useEffect(() => {
@@ -59,6 +75,9 @@ export default function ParallaxHero() {
 
         const animate = () => {
             rafRef.current = requestAnimationFrame(animate);
+
+            // Skip expensive DOM updates when hero is off screen
+            if (!isHeroVisibleRef.current) return;
 
             const tx = isInteractingRef.current ? targetRef.current.x : 0;
             const ty = isInteractingRef.current ? targetRef.current.y : 0;
@@ -210,21 +229,19 @@ export default function ParallaxHero() {
                                             variants={{
                                                 hidden: {
                                                     opacity: 0,
-                                                    y: 20,
-                                                    filter: 'blur(8px)',
+                                                    y: 15,
                                                 },
                                                 visible: {
                                                     opacity: 1,
                                                     y: 0,
-                                                    filter: 'blur(0px)',
                                                     transition: {
-                                                        duration: 0.6,
+                                                        duration: 0.5,
                                                         ease: [0.16, 1, 0.3, 1],
                                                     },
                                                 },
                                             }}
                                             className="inline-block"
-                                            style={{ willChange: 'transform, opacity, filter' }}
+                                            style={{ willChange: 'transform, opacity' }}
                                         >
                                             {char}
                                         </motion.span>
@@ -258,25 +275,19 @@ export default function ParallaxHero() {
                                             variants={{
                                                 hidden: {
                                                     opacity: 0,
-                                                    y: 35,
-                                                    scale: 0.85,
-                                                    filter: 'blur(10px)',
-                                                    rotateX: -30,
+                                                    y: 30,
                                                 },
                                                 visible: {
                                                     opacity: 1,
                                                     y: 0,
-                                                    scale: 1,
-                                                    filter: 'blur(0px)',
-                                                    rotateX: 0,
                                                     transition: {
-                                                        duration: 0.7,
+                                                        duration: 0.6,
                                                         ease: [0.16, 1, 0.3, 1],
                                                     },
                                                 },
                                             }}
                                             className="text-gradient bg-gradient-to-r from-blue-400 via-cyan-300 to-blue-400 bg-[length:200%] animate-gradient inline-block"
-                                            style={{ willChange: 'transform, opacity, filter' }}
+                                            style={{ willChange: 'transform, opacity' }}
                                         >
                                             {letter}
                                         </motion.span>

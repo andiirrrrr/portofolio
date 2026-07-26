@@ -15,6 +15,13 @@
     /* Hanya opacity fade — tidak ada translateY agar tidak loncat saat refresh */
     animation: pageEnter 0.4s ease-out both;
   }
+
+  /* Skip rendering off-screen sections until needed — huge scroll perf win */
+  section {
+    content-visibility: auto;
+    /* Estimate intrinsic size so layout doesn't shift on reveal */
+    contain-intrinsic-size: 0 600px;
+  }
 }
 
 @layer utilities {
@@ -24,6 +31,7 @@
 
   .animate-gradient {
     animation: gradientMove 3s ease-in-out infinite;
+    will-change: background-position;
   }
 
   .glass-effect {

@@ -135,10 +135,13 @@ export default function Aurora({
         const ctn = ctnDom.current;
         if (!ctn) return;
 
+        // antialias: false = massive GPU savings (invisible diff on shader backgrounds)
         const renderer = new Renderer({
             alpha: true,
             premultipliedAlpha: true,
-            antialias: true
+            antialias: false,
+            // Cap DPR to 1.5 — prevents shader from rendering at 3× on retina/mobile
+            dpr: Math.min(window.devicePixelRatio || 1, 1.5),
         });
         const gl = renderer.gl;
         gl.clearColor(0, 0, 0, 0);
@@ -146,13 +149,22 @@ export default function Aurora({
         gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
         gl.canvas.style.backgroundColor = 'transparent';
 
+        // Detect mobile for resolution downscaling
+        const isMobileDevice = () => window.innerWidth < 768 || 'ontouchstart' in window;
+
         let program: Program;
 
         function resize() {
             if (!ctn) return;
-            const width = ctn.offsetWidth;
-            const height = ctn.offsetHeight;
+            const mobile = isMobileDevice();
+            // On mobile: render at half resolution (50% width/height) — huge performance win
+            const scale = mobile ? 0.5 : 1;
+            const width = Math.floor(ctn.offsetWidth * scale);
+            const height = Math.floor(ctn.offsetHeight * scale);
             renderer.setSize(width, height);
+            // Keep canvas visually filling the container via CSS
+            gl.canvas.style.width = '100%';
+            gl.canvas.style.height = '100%';
             if (program) {
                 program.uniforms.uResolution.value = [width, height];
             }

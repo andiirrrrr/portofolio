@@ -1,7 +1,7 @@
 'use client';
 
-import { motion, useInView, Variants } from 'framer-motion';
-import { useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
+import { useRef, useState, useEffect } from 'react';
 
 interface TypewriterTextProps {
   text: string;
@@ -22,84 +22,72 @@ export default function TypewriterText({
 }: TypewriterTextProps) {
   const containerRef = useRef<HTMLSpanElement>(null);
   const isInView = useInView(containerRef, { once, amount: 0.2 });
+  const [displayed, setDisplayed] = useState('');
+  const [done, setDone] = useState(false);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const indexRef = useRef(0);
+  const startedRef = useRef(false);
+
+  useEffect(() => {
+    if (!isInView || startedRef.current || !text) return;
+    startedRef.current = true;
+
+    const speedMs = speed * 1000; // convert seconds → ms
+    const delayMs = delay * 1000;
+
+    // Reset
+    setDisplayed('');
+    setDone(false);
+    indexRef.current = 0;
+
+    const startTyping = () => {
+      const tick = () => {
+        indexRef.current += 1;
+        setDisplayed(text.slice(0, indexRef.current));
+        if (indexRef.current < text.length) {
+          timerRef.current = setTimeout(tick, speedMs);
+        } else {
+          setDone(true);
+        }
+      };
+      timerRef.current = setTimeout(tick, speedMs);
+    };
+
+    timerRef.current = setTimeout(startTyping, delayMs);
+
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
+  }, [isInView, text, speed, delay]);
+
+  // When text prop changes (re-trigger)
+  useEffect(() => {
+    if (!startedRef.current) return;
+    startedRef.current = false;
+    setDisplayed('');
+    setDone(false);
+    indexRef.current = 0;
+    if (timerRef.current) clearTimeout(timerRef.current);
+  }, [text]);
 
   if (!text) return null;
 
-  // Split teks menjadi kata-kata, lalu setiap kata menjadi huruf
-  // Menggunakan inline-block & whitespace-nowrap per kata agar word-wrapping CSS tetap konsisten dan tidak patah/jitter saat animasi
-  const words = text.split(' ');
-
-  const containerVariants: Variants = {
-    hidden: { opacity: 1 },
-    visible: {
-      opacity: 1,
-      transition: {
-        delayChildren: delay,
-        staggerChildren: speed,
-      },
-    },
-  };
-
-  const charVariants: Variants = {
-    hidden: {
-      opacity: 0,
-      y: 2,
-      filter: 'blur(2px)',
-    },
-    visible: {
-      opacity: 1,
-      y: 0,
-      filter: 'blur(0px)',
-      transition: {
-        duration: 0.1,
-        ease: 'easeOut',
-      },
-    },
-  };
-
   return (
-    <motion.span
-      ref={containerRef}
-      className={`inline ${className}`}
-      variants={containerVariants}
-      initial="hidden"
-      animate={isInView ? 'visible' : 'hidden'}
-      key={text}
-    >
-      {words.map((word, wordIdx) => (
-        <span key={wordIdx} className="inline-block whitespace-nowrap">
-          {word.split('').map((char, charIdx) => (
-            <motion.span
-              key={charIdx}
-              variants={charVariants}
-              className="inline-block"
-              style={{ willChange: 'opacity, transform, filter' }}
-            >
-              {char}
-            </motion.span>
-          ))}
-          {/* Spasi antar kata */}
-          {wordIdx < words.length - 1 && (
-            <motion.span variants={charVariants} className="inline-block">
-              &nbsp;
-            </motion.span>
-          )}
-        </span>
-      ))}
-
-      {/* Kursor Ketik (Blinking Cursor Effect) */}
+    <span ref={containerRef} className={`inline ${className}`}>
+      {displayed}
+      {/* Blinking cursor */}
       {cursor && (
         <motion.span
-          initial={{ opacity: 0 }}
-          animate={{ opacity: [1, 0, 1] }}
-          transition={{
-            repeat: Infinity,
-            duration: 0.8,
-            ease: 'easeInOut',
-          }}
+          initial={{ opacity: 1 }}
+          animate={done ? { opacity: [1, 0, 1] } : { opacity: 1 }}
+          transition={
+            done
+              ? { repeat: Infinity, duration: 0.8, ease: 'easeInOut' }
+              : undefined
+          }
           className="inline-block ml-1 w-[2px] h-[1.1em] bg-cyan-400 align-middle rounded-full shadow-[0_0_8px_rgba(34,211,238,0.8)]"
         />
       )}
-    </motion.span>
+    </span>
   );
 }

@@ -87,7 +87,7 @@ export default function AboutSection({ profile, experiences, educations }: About
                   initial={{ width: 0 }}
                   whileInView={{ width: '80px' }}
                   viewport={{ once: true }}
-                  transition={{ delay: 0.3, duration: 0.8 }}
+                  transition={{ delay: 0.2, duration: 0.6 }}
                   className="h-1 bg-gradient-to-r from-blue-400 via-cyan-300 to-blue-500 rounded-full"
                 />
               </div>
@@ -108,14 +108,14 @@ export default function AboutSection({ profile, experiences, educations }: About
               {/* Highlight Feature Badges */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
                 <motion.div
-                  whileHover={{ scale: 1.03, x: 4 }}
+                  whileHover={{ scale: 1.03 }}
                   className="flex items-center gap-2 p-2.5 rounded-lg bg-navy-950/60 border border-navy-700/60 text-xs text-gray-300"
                 >
-                  <span className="w-2 h-2 rounded-full bg-blue-400 animate-ping" />
+                  <span className="w-2 h-2 rounded-full bg-blue-400" />
                   <span>Full-Stack Architecture</span>
                 </motion.div>
                 <motion.div
-                  whileHover={{ scale: 1.03, x: 4 }}
+                  whileHover={{ scale: 1.03 }}
                   className="flex items-center gap-2 p-2.5 rounded-lg bg-navy-950/60 border border-navy-700/60 text-xs text-gray-300"
                 >
                   <span className="w-2 h-2 rounded-full bg-cyan-400" />
@@ -206,10 +206,10 @@ export default function AboutSection({ profile, experiences, educations }: About
                   experiences.map((exp, index) => (
                     <motion.div
                       key={exp.id}
-                      initial={{ opacity: 0, x: -20 }}
-                      whileInView={{ opacity: 1, x: 0 }}
+                      initial={{ opacity: 0, y: 15 }}
+                      whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
-                      transition={{ delay: index * 0.1, duration: 0.5 }}
+                      transition={{ delay: Math.min(index * 0.08, 0.3), duration: 0.45 }}
                       className="relative bg-navy-800/90 rounded-xl p-5 border border-navy-700 hover:border-blue-500/40 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/10 group"
                     >
                       {/* Timeline Node Dot */}
@@ -264,10 +264,10 @@ export default function AboutSection({ profile, experiences, educations }: About
                   educations.map((edu, index) => (
                     <motion.div
                       key={edu.id}
-                      initial={{ opacity: 0, x: 20 }}
-                      whileInView={{ opacity: 1, x: 0 }}
+                      initial={{ opacity: 0, y: 15 }}
+                      whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
-                      transition={{ delay: index * 0.1, duration: 0.5 }}
+                      transition={{ delay: Math.min(index * 0.08, 0.3), duration: 0.45 }}
                       className="relative bg-navy-800/90 rounded-xl p-5 border border-navy-700 hover:border-cyan-500/40 transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/10 group"
                     >
                       {/* Timeline Node Dot */}

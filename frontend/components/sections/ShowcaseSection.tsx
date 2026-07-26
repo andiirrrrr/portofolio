@@ -109,7 +109,7 @@ export default function ShowcaseSection({
 
         {/* CONTENT: Portfolio Tab */}
         {activeTab === 'portfolio' && (
-          <AnimatedSection direction="blur-up" delay={0.15}>
+          <AnimatedSection direction="fade" delay={0.1}>
             {projects.length > 0 ? (
               <ChromaGrid
                 items={projects.map((p, index) => {
@@ -154,7 +154,7 @@ export default function ShowcaseSection({
 
         {/* CONTENT: Certificates Tab */}
         {activeTab === 'certificates' && (
-          <AnimatedSection direction="blur-up" delay={0.15}>
+          <AnimatedSection direction="fade" delay={0.1}>
             {certificates.length > 0 ? (
               <ChromaGrid
                 items={certificates.map((c, index) => {
@@ -205,7 +205,7 @@ export default function ShowcaseSection({
 
         {/* CONTENT: Tech Stack Tab */}
         {activeTab === 'skills' && (
-          <AnimatedSection direction="blur-up" delay={0.15}>
+          <AnimatedSection direction="fade" delay={0.1}>
             {skills.length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
                 {skills.map((skill, index) => {
@@ -214,10 +214,10 @@ export default function ShowcaseSection({
                   return (
                     <motion.div
                       key={skill.id}
-                      initial={{ opacity: 0, y: 30, rotateX: 20 }}
-                      whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
-                      transition={{ delay: index * 0.04, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                      transition={{ delay: Math.min(index * 0.04, 0.3), duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                       whileHover={{ scale: 1.03, y: -4 }}
                       className="bg-navy-800/90 rounded-xl p-5 border border-navy-700 hover:border-blue-500/50 transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/10 group"
                     >

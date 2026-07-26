@@ -27,19 +27,19 @@ interface AnimatedSectionProps {
 
 const animations: Record<AnimationDirection, { initial: any; animate: any; transition?: any }> = {
     up: {
-        initial: { opacity: 0, y: 35 },
+        initial: { opacity: 0, y: 30 },
         animate: { opacity: 1, y: 0 },
     },
     left: {
-        initial: { opacity: 0, x: -45, rotateY: 10 },
-        animate: { opacity: 1, x: 0, rotateY: 0 },
+        initial: { opacity: 0, x: -35 },
+        animate: { opacity: 1, x: 0 },
     },
     right: {
-        initial: { opacity: 0, x: 45, rotateY: -10 },
-        animate: { opacity: 1, x: 0, rotateY: 0 },
+        initial: { opacity: 0, x: 35 },
+        animate: { opacity: 1, x: 0 },
     },
     scale: {
-        initial: { opacity: 0, scale: 0.9, y: 15 },
+        initial: { opacity: 0, scale: 0.92, y: 12 },
         animate: { opacity: 1, scale: 1, y: 0 },
     },
     fade: {
@@ -47,27 +47,29 @@ const animations: Record<AnimationDirection, { initial: any; animate: any; trans
         animate: { opacity: 1 },
     },
     flip: {
-        initial: { opacity: 0, rotateX: 50 },
+        initial: { opacity: 0, rotateX: 25 },
         animate: { opacity: 1, rotateX: 0 },
     },
+    // blur-up WITHOUT filter:blur — filter forces compositor layer per-element (very heavy on mobile)
     'blur-up': {
-        initial: { opacity: 0, y: 30, filter: 'blur(4px)' },
-        animate: { opacity: 1, y: 0, filter: 'blur(0px)' },
+        initial: { opacity: 0, y: 25 },
+        animate: { opacity: 1, y: 0 },
     },
     'flip-3d': {
-        initial: { opacity: 0, y: 40, rotateX: 20, transformPerspective: 1000 },
+        initial: { opacity: 0, y: 30, rotateX: 12, transformPerspective: 1000 },
         animate: { opacity: 1, y: 0, rotateX: 0, transformPerspective: 1000 },
     },
     curtain: {
-        initial: { opacity: 0, y: 50, skewY: 2 },
-        animate: { opacity: 1, y: 0, skewY: 0 },
+        initial: { opacity: 0, y: 40 },
+        animate: { opacity: 1, y: 0 },
     },
     elastic: {
-        initial: { opacity: 0, scale: 0.82, y: 25 },
+        initial: { opacity: 0, scale: 0.85, y: 20 },
         animate: { opacity: 1, scale: 1, y: 0 },
-        transition: { type: 'spring', stiffness: 260, damping: 20 },
+        transition: { type: 'spring', stiffness: 280, damping: 22 },
     },
 };
+
 
 export default function AnimatedSection({
     children,
