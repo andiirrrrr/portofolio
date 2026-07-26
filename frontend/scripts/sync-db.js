@@ -14,7 +14,9 @@ try {
   console.log('🖼️  2. Menyalin berkas media & foto ke frontend/public/storage...');
   execSync('powershell -Command "if (!(Test-Path \'frontend/public/storage\')) { New-Item -ItemType Directory -Path \'frontend/public/storage\' -Force }; Copy-Item -Path \'backend/storage/app/public/*\' -Destination \'frontend/public/storage\' -Recurse -Force"', { cwd: rootDir, stdio: 'inherit' });
 
-  console.log('✅ Sinkronisasi Selesai! Kamu bisa langsung jalankan `git add . && git commit -m "update data" && git push` untuk update live Vercel!');
+  console.log('✅ Sinkronisasi Selesai!');
+  console.log('➡️  Pastikan file baru di frontend/public/storage ikut di-commit (sudah tidak di-gitignore).');
+  console.log('➡️  Lanjut: git add . && git commit -m "update data" && git push agar Vercel update.');
 } catch (error) {
   console.error('❌ Terjadi kesalahan saat sinkronisasi:', error.message);
 }

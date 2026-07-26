@@ -1,2 +1,5 @@
-*
-!.gitignore
+# Track media files so Vercel can serve /storage/* after sync-db + git push.
+# Ignore only OS junk; keep certificates, lanyard, profiles, projects, etc.
+.DS_Store
+Thumbs.db
+*.tmp

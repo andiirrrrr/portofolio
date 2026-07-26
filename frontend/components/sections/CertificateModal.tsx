@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ExternalLink, Download } from 'lucide-react';
 import { Certificate } from '@/types';
+import { getImageUrl } from '@/lib/api';
 
 interface CertificateModalProps {
   certificate: Certificate | null;
@@ -43,7 +44,7 @@ export default function CertificateModal({ certificate, isOpen, onClose }: Certi
               <div className="relative w-full rounded-xl overflow-hidden bg-navy-800">
                 {certificate.image ? (
                   <img
-                    src={certificate.image}
+                    src={getImageUrl(certificate.image)}
                     alt={certificate.name}
                     className="w-full h-auto object-contain max-h-[70vh]"
                   />
@@ -95,7 +96,7 @@ export default function CertificateModal({ certificate, isOpen, onClose }: Certi
                   )}
                   {certificate.image && (
                     <a
-                      href={certificate.image}
+                      href={getImageUrl(certificate.image)}
                       download
                       target="_blank"
                       rel="noopener noreferrer"

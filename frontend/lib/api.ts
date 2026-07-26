@@ -71,7 +71,7 @@ export const getProjects = () => fetchWithFallback('/projects', 'projects');
 // Certificates
 export const getCertificates = () => fetchWithFallback('/certificates', 'certificates');
 
-// Chat Messages
+// Chat Messages (public guestbook — ephemeral on Vercel serverless)
 export const getChatMessages = async () => {
     try {
         const res = await axios.get('/api/chat');
@@ -81,7 +81,15 @@ export const getChatMessages = async () => {
     }
 };
 
-// Contacts
+export const sendChatMessage = async (data: { name: string; message: string }) => {
+    const res = await axios.post('/api/chat', {
+        name: data.name,
+        message: data.message,
+    });
+    return res;
+};
+
+// Contact Form — real delivery via /api/contact (Laravel lokal atau email FormSubmit)
 export const sendContact = async (data: {
     name: string;
     email: string;
@@ -89,15 +97,19 @@ export const sendContact = async (data: {
     message: string;
     phone?: string;
 }) => {
-    try {
-        const res = await axios.post('/api/chat', {
-            name: data.name,
-            message: data.message,
-        });
-        return res;
-    } catch {
-        return { data: { success: true, message: 'Pesan berhasil terkirim!' } };
+    const res = await axios.post('/api/contact', {
+        name: data.name,
+        email: data.email,
+        subject: data.subject || 'Contact Form Message',
+        message: data.message,
+        phone: data.phone,
+    });
+
+    if (!res.data?.success) {
+        throw new Error(res.data?.message || 'Gagal mengirim pesan');
     }
+
+    return res;
 };
 
 export default api;

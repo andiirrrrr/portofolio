@@ -4,7 +4,8 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Send, User, Loader2, Wifi, WifiOff } from 'lucide-react';
 import Aurora from '@/components/aurora/Aurora';
-import { sendContact, getChatMessages } from '@/lib/api';
+import { sendContact, sendChatMessage, getChatMessages } from '@/lib/api';
+import { CHAT_LIMITS } from '@/lib/chatLimits';
 
 interface Message {
     id: string;
@@ -23,6 +24,7 @@ export default function ChatRoom() {
     const [isNameSet, setIsNameSet] = useState(false);
     const [isSending, setIsSending] = useState(false);
     const [isConnected, setIsConnected] = useState(false);
+    const [isShared, setIsShared] = useState(false);
     const [isInitialLoading, setIsInitialLoading] = useState(true);
     const [isSectionVisible, setIsSectionVisible] = useState(false);
     const chatBoxRef = useRef<HTMLDivElement>(null);
@@ -70,6 +72,7 @@ export default function ChatRoom() {
         try {
             const res = await getChatMessages();
             const data: Message[] = res.data?.data ?? [];
+            setIsShared(Boolean(res.data?.shared));
 
             if (data.length > 0) {
                 const myName = myNameRef.current;
@@ -94,6 +97,8 @@ export default function ChatRoom() {
                     });
                 }
                 lastTimestampRef.current = data[data.length - 1].timestamp;
+            } else if (isInitial) {
+                setMessages([]);
             }
             setIsConnected(true);
         } catch {
@@ -103,11 +108,12 @@ export default function ChatRoom() {
         }
     }, []);
 
-    // Load awal + mulai polling
+    // Load awal + polling hanya saat section terlihat (hemat request di Vercel)
     useEffect(() => {
+        if (!isSectionVisible) return;
+
         fetchMessages(true);
 
-        // Polling setiap POLL_INTERVAL ms
         pollIntervalRef.current = setInterval(() => {
             fetchMessages(false);
         }, POLL_INTERVAL);
@@ -117,7 +123,7 @@ export default function ChatRoom() {
                 clearInterval(pollIntervalRef.current);
             }
         };
-    }, [fetchMessages]);
+    }, [fetchMessages, isSectionVisible]);
 
     // Set nama pengguna
     const handleSetName = (e: React.FormEvent) => {
@@ -161,14 +167,12 @@ export default function ChatRoom() {
         setMessages((prev) => [...prev, optimisticMsg]);
 
         try {
-            const res = await sendContact({
+            const res = await sendChatMessage({
                 name: senderName,
-                email: `${senderName.toLowerCase().replace(/\s+/g, '.')}@chat.room`,
                 message: messageText,
-                subject: 'Chat Room Message',
             });
 
-            // Ganti ID temporary dengan ID asli dari database Laravel
+            // Ganti ID temporary dengan ID asli dari server
             const serverData = res.data?.data;
             if (serverData && serverData.id) {
                 const realId = String(serverData.id);
@@ -178,7 +182,7 @@ export default function ChatRoom() {
                             ? {
                                   ...m,
                                   id: realId,
-                                  timestamp: serverData.created_at || m.timestamp,
+                                  timestamp: serverData.timestamp || m.timestamp,
                               }
                             : m
                     )
@@ -255,9 +259,12 @@ export default function ChatRoom() {
                                         Public Chat Room
                                     </span>
                                     <span className={`text-[10px] ${isConnected ? 'text-green-400' : 'text-red-400'}`}>
-                                        ● {isConnected ? 'Live' : 'Offline'}
+                                        ● {isConnected ? (isShared ? 'Live' : 'Local') : 'Offline'}
                                     </span>
                                 </div>
+                                <span className="text-[10px] text-gray-500 hidden sm:inline">
+                                    Maks {CHAT_LIMITS.maxMessageLength} karakter · {CHAT_LIMITS.maxMessages} pesan terakhir
+                                </span>
                             </div>
 
                             {/* Set Name Banner */}
@@ -270,7 +277,7 @@ export default function ChatRoom() {
                                             onChange={(e) => setUserName(e.target.value)}
                                             placeholder="Masukkan nama untuk bergabung..."
                                             className="flex-1 px-3 py-2 bg-navy-900/80 border border-navy-600 rounded-lg text-white placeholder-gray-500 text-sm focus:outline-none focus:border-blue-500 transition-colors duration-300"
-                                            maxLength={30}
+                                            maxLength={CHAT_LIMITS.maxNameLength}
                                             required
                                         />
                                         <button
@@ -359,21 +366,32 @@ export default function ChatRoom() {
                             {/* Input Area */}
                             <div className="px-3 md:px-4 py-3 border-t border-navy-700 bg-navy-800/40">
                                 <form onSubmit={handleSendMessage} className="flex gap-2">
-                                    <input
-                                        type="text"
-                                        value={newMessage}
-                                        onChange={(e) => setNewMessage(e.target.value)}
-                                        placeholder={isNameSet ? 'Ketik pesan...' : 'Set nama dulu untuk chat'}
-                                        disabled={!isNameSet || isSending}
-                                        maxLength={500}
-                                        className="flex-1 px-3 py-2 bg-navy-900/80 border border-navy-600 rounded-lg text-white placeholder-gray-500 text-sm focus:outline-none focus:border-blue-500 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
-                                        onKeyDown={(e) => {
-                                            if (e.key === 'Enter' && !e.shiftKey) {
-                                                e.preventDefault();
-                                                handleSendMessage(e as any);
-                                            }
-                                        }}
-                                    />
+                                    <div className="flex-1 relative">
+                                        <input
+                                            type="text"
+                                            value={newMessage}
+                                            onChange={(e) => setNewMessage(e.target.value.slice(0, CHAT_LIMITS.maxMessageLength))}
+                                            placeholder={isNameSet ? 'Ketik pesan singkat...' : 'Set nama dulu untuk chat'}
+                                            disabled={!isNameSet || isSending}
+                                            maxLength={CHAT_LIMITS.maxMessageLength}
+                                            className="w-full px-3 py-2 pr-12 bg-navy-900/80 border border-navy-600 rounded-lg text-white placeholder-gray-500 text-sm focus:outline-none focus:border-blue-500 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                                            onKeyDown={(e) => {
+                                                if (e.key === 'Enter' && !e.shiftKey) {
+                                                    e.preventDefault();
+                                                    handleSendMessage(e as React.FormEvent);
+                                                }
+                                            }}
+                                        />
+                                        {isNameSet && (
+                                            <span className={`absolute right-2 top-1/2 -translate-y-1/2 text-[10px] tabular-nums ${
+                                                newMessage.length >= CHAT_LIMITS.maxMessageLength
+                                                    ? 'text-amber-400'
+                                                    : 'text-gray-500'
+                                            }`}>
+                                                {newMessage.length}/{CHAT_LIMITS.maxMessageLength}
+                                            </span>
+                                        )}
+                                    </div>
                                     <motion.button
                                         type="submit"
                                         disabled={!isNameSet || isSending || !newMessage.trim()}
@@ -401,7 +419,9 @@ export default function ChatRoom() {
                     >
                         <div className="bg-navy-800/80 rounded-2xl p-6 md:p-8 border border-navy-700 backdrop-blur-sm hover:border-cyan-500/30 transition-all duration-500 shadow-xl">
                             <h3 className="text-xl font-bold text-white mb-1">Contact Form</h3>
-                            <p className="text-sm text-gray-400 mb-6">Kirim pesan langsung ke saya</p>
+                            <p className="text-sm text-gray-400 mb-6">
+                                Pesan masuk langsung ke email saya (bukan chat publik)
+                            </p>
                             <ContactForm />
                         </div>
                     </motion.div>
@@ -433,6 +453,7 @@ function ContactForm() {
         e.preventDefault();
         setLoading(true);
         setStatus('idle');
+        setErrorMessage('');
 
         try {
             await sendContact({
@@ -443,10 +464,13 @@ function ContactForm() {
             });
             setStatus('success');
             setFormData({ name: '', email: '', subject: '', message: '' });
-        } catch (error: any) {
+        } catch (error: unknown) {
             setStatus('error');
+            const err = error as { response?: { data?: { message?: string } }; message?: string };
             setErrorMessage(
-                error.response?.data?.message || 'Failed to send message. Please try again.'
+                err.response?.data?.message ||
+                    err.message ||
+                    'Gagal mengirim pesan. Silakan coba lagi.'
             );
         } finally {
             setLoading(false);
@@ -464,7 +488,7 @@ function ContactForm() {
                         className="mb-4 p-3 bg-green-500/10 border border-green-500/30 rounded-lg flex items-center gap-2 text-green-400 text-sm"
                     >
                         <span>✓</span>
-                        <span>Pesan berhasil dikirim!</span>
+                        <span>Pesan berhasil dikirim ke email saya!</span>
                     </motion.div>
                 )}
                 {status === 'error' && (
