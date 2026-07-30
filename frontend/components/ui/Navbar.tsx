@@ -24,6 +24,7 @@ export default function Navbar() {
     const [scrolled, setScrolled] = useState(false);
     const [activeIndex, setActiveIndex] = useState(0);
     const activeIndexRef = useRef(0);
+    const isMobileRef = useRef(false);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -65,6 +66,33 @@ export default function Navbar() {
             window.removeEventListener('resize', handleScroll);
         };
     }, []);
+
+    // Cek mobile dan outside click handler untuk mobile menu
+    useEffect(() => {
+        const checkMobile = () => {
+            isMobileRef.current = window.innerWidth < 768;
+        };
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
+
+    // Outside click handler untuk mobile menu - hanya tutup jika bukan klik pada mobile menu
+    useEffect(() => {
+        if (!isOpen || window.innerWidth >= 768) return;
+
+        const handleClick = (e: MouseEvent) => {
+            const target = e.target as HTMLElement;
+            // Jangan tutup jika klik pada tombol menu atau di dalam mobile menu
+            if (target.closest('[data-nav-toggle]') || target.closest('[data-mobile-menu]')) {
+                return;
+            }
+            setIsOpen(false);
+        };
+
+        document.addEventListener('click', handleClick);
+        return () => document.removeEventListener('click', handleClick);
+    }, [isOpen]);
 
     const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string, index: number) => {
         e.preventDefault();
@@ -138,6 +166,7 @@ export default function Navbar() {
                         onClick={() => setIsOpen(!isOpen)}
                         aria-label={isOpen ? 'Tutup menu navigasi' : 'Buka menu navigasi'}
                         aria-expanded={isOpen}
+                        data-nav-toggle
                         className="md:hidden text-white p-2"
                     >
                         {isOpen ? <X size={24} /> : <Menu size={24} />}
@@ -147,11 +176,12 @@ export default function Navbar() {
 
             {/* Mobile Menu */}
             <motion.div
+                data-mobile-menu
                 initial={false}
-                animate={isOpen ? { height: 'auto', opacity: 1 } : { height: 0, opacity: 0 }}
-                transition={{ duration: 0.3, ease: 'easeInOut' }}
+                animate={isOpen ? { maxHeight: 500, opacity: 1 } : { maxHeight: 0, opacity: 0 }}
+                transition={{ duration: 0.3, ease: [0.04, 0.62, 0.23, 0.98] }}
                 className="md:hidden overflow-hidden"
-            >
+             >
                 <div className="px-4 py-3 space-y-2 bg-navy-900/95 backdrop-blur-md">
                     {navItems.map((item, index) => (
                         <motion.div

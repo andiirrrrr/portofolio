@@ -95,8 +95,7 @@ const CONTACT_EMAIL =
     '';
 
 // Contact Form:
-// - Localhost: coba Laravel dulu via /api/contact
-// - Production: FormSubmit HARUS dari browser (server/Vercel ditolak FormSubmit)
+
 export const sendContact = async (data: {
     name: string;
     email: string;
