@@ -6,7 +6,7 @@
         "email": "andiandir999@gmail.com",
         "phone": "087780941492",
         "location": "Perumahan Rindini Blok B No 5",
-        "bio": "Full-Stack Web Developer dan lulusan Teknik Informatika Universitas Muslim Indonesia (S.Kom.). Saat ini mengelola arwebstudio.id untuk membangun company profile, landing page, sistem POS, hingga admin panel. Berpengalaman menggunakan Laravel, React.js, Tailwind CSS, dan MySQL\u2014termasuk pada proyek optimasi web NIPAH PARK serta perancangan ulang sistem akuntansi.",
+        "bio": "Full-Stack Web Developer (S.Kom., Teknik Informatika UMI), pengelola arwebstudio.id \u2014 membangun company profile, landing page, sistem POS, hingga admin panel dengan Laravel, React.js, Tailwind CSS, dan MySQL. Pengalaman mencakup optimasi web NIPAH PARK dan perancangan ulang sistem akuntansi.",
         "profile_image": "profiles\/BvxvYQbo6SsSVkhCc3bSMPkWDxV0fI7cPMqfgt7v.jpg",
         "lanyard_image": "lanyard\/XaOOcc9VOljcGS4aZnD9Avg98wiMtrh9bJXhiwNJ.png",
         "cv_file": "cv\/HVj7K6erfhVtBXFz7RC9O2IRIW3C0hSkgIw770a9.pdf",
@@ -15,10 +15,10 @@
         "instagram_url": "https:\/\/www.instagram.com\/andiirrrrr",
         "youtube_url": null,
         "website_url": null,
-        "about_me": "Saya adalah seorang Full-Stack Web Developer dan lulusan Teknik Informatika dari Universitas Muslim Indonesia yang berfokus pada perancangan serta pembuatan aplikasi web responsif, cepat, dan terstruktur sesuai kebutuhan operasional bisnis. Melalui unit usaha arwebstudio.id, saya secara aktif merancang dan membangun berbagai platform kustom seperti company profile, landing page, sistem Point of Sale (POS), hingga dashboard admin interaktif dengan mengombinasikan keahlian backend (PHP, Laravel, MySQL, perancangan basis data) serta frontend modern (React.js, Tailwind CSS, HTML5\/CSS3). Dalam alur kerja harian, saya mengoptimalkan perkakas seperti Visual Studio Code, Git, dan lingkungan lokal Laragon yang dipadukan dengan alur pemrograman bantu AI untuk mempercepat penulisan kode, optimasi struktur data, serta memperlancar proses debugging. Rekam jejak profesional saya mencakup pengalaman magang di Kalla pada Departemen QBI, di mana saya berkontribusi dalam pembuatan website company profile, merancang use case dan flowchart analisis sistem untuk BWP System, serta menyusun tampilan seluler (mobile view) untuk Portal VPP Baruga. Selain keahlian teknis, pengalaman menjalankan fungsi pengawasan di BLM KABAMA FIKOM UMI serta memimpin manajemen administrasi dan penggalangan dana di UKM DIAFRAGMA UMI turut membentuk pribadi saya yang komunikatif, terstruktur, dan berorientasi pada penyelesaian masalah secara efisien.",
+        "about_me": "Full-Stack Web Developer, lulusan Teknik Informatika Universitas Muslim Indonesia. Melalui arwebstudio.id, saya merancang dan membangun website \u2014 company profile, landing page, sistem POS, hingga dashboard admin \u2014 menggabungkan backend (PHP, Laravel, MySQL) dan frontend modern (React.js, Tailwind CSS). Berpengalaman magang di Kalla (Departemen QBI) untuk pembuatan website company profile dan analisis sistem, serta aktif berorganisasi di BLM KABAMA FIKOM UMI dan UKM DIAFRAGMA UMI.",
         "professional_summary": "Lulusan Teknik Informatika (S.Kom.) Universitas Muslim Indonesia dan Full-Stack Web Developer dengan pengalaman praktis membangun serta mengoptimalkan aplikasi web berbasis Laravel, React.js, Tailwind CSS, dan MySQL. Selaku pendiri arwebstudio.id, saya berpengalaman dalam meningkatkan performa platform web korporat (NIPAH PARK), merancang ulang alur logika sistem akuntansi yang kompleks, serta mengelola basis data relasional. Memiliki pola pikir analitis yang terstruktur, terbiasa menyusun dokumentasi teknis, serta berpengalaman dalam kepemimpinan dan fungsi pengawasan di organisasi kampus.",
         "created_at": "2026-07-18T09:06:05.000000Z",
-        "updated_at": "2026-07-26T09:17:05.000000Z"
+        "updated_at": "2026-08-03T04:44:49.000000Z"
     },
     "projects": [
         {
