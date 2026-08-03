@@ -72,7 +72,7 @@ export default function IntroSection({ profile }: IntroSectionProps) {
                 transition={{ duration: 0.4 }}
                 className="inline-block px-4 py-1.5 bg-blue-500/20 text-blue-300 rounded-full text-sm font-medium border border-blue-500/30 shadow-sm"
               >
-                ✦ Introduction
+                Introduction
               </motion.span>
 
               <div className="space-y-1">
@@ -103,7 +103,6 @@ export default function IntroSection({ profile }: IntroSectionProps) {
                 transition={{ duration: 0.6, delay: 0.3 }}
                 className="flex items-center gap-2 text-lg md:text-xl"
               >
-                <span className="text-gray-400">✦</span>
                 <span className="text-gray-300">
                   <TypingText
                     words={KEYWORDS}

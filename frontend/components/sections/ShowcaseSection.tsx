@@ -81,7 +81,7 @@ export default function ShowcaseSection({
         <AnimatedSection direction="blur-up">
           <div className="text-center mb-10">
             <span className="inline-block px-4 py-1.5 bg-blue-500/20 text-blue-300 rounded-full text-sm font-medium mb-3 border border-blue-500/30">
-              ✦ Showcase
+              Showcase
             </span>
             <h2 className="text-3xl md:text-4xl font-bold text-white">
               My <span className="text-gradient">Portfolio</span>
@@ -98,8 +98,8 @@ export default function ShowcaseSection({
                 key={tab}
                 onClick={() => setActiveTab(tab)}
                 className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-sm font-medium transition-all duration-300 whitespace-nowrap ${activeTab === tab
-                    ? 'bg-blue-500 text-white shadow-lg shadow-blue-500/30 scale-105'
-                    : 'bg-navy-800 text-gray-400 hover:text-white hover:bg-navy-700 border border-navy-700'
+                  ? 'bg-blue-500 text-white shadow-lg shadow-blue-500/30 scale-105'
+                  : 'bg-navy-800 text-gray-400 hover:text-white hover:bg-navy-700 border border-navy-700'
                   }`}
               >
                 {tabLabels[tab]}
