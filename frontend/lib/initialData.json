@@ -43,6 +43,27 @@
             "updated_at": "2026-07-25T15:26:12.000000Z"
         },
         {
+            "id": 5,
+            "title": "Riona Architects",
+            "slug": "riona-architects",
+            "category": null,
+            "short_description": "Riona Architects merupakan studio arsitektur yang membutuhkan website company profile profesional untuk memperkenalkan identitas, layanan, serta portfolio proyek kepada calon klien. Website dirancang dengan tampilan modern, minimalis, dan elegan yang merepresentasikan karakter Riona Architects sebagai studio arsitektur.",
+            "description": "Website berhasil menjadi media digital profesional bagi Riona Architects untuk memperkuat identitas brand, menampilkan portfolio secara lebih menarik, serta memudahkan calon klien dalam mendapatkan informasi mengenai layanan dan menghubungi perusahaan. Tampilan website juga dirancang untuk memberikan kesan modern, profesional, dan sesuai dengan karakter industri arsitektur.",
+            "thumbnail": "projects\/thumbnails\/hAUIs7LEKV7olhdIIib43TmejB0K3kzYRsTy0tyr.jpg",
+            "github_url": null,
+            "demo_url": "https:\/\/riona-architects-production.up.railway.app\/",
+            "tech_stack": "[\"Laravel\",\"PHP\",\"Tailwind CSS\",\"Java Script\"]",
+            "challenges": null,
+            "solutions": null,
+            "key_features": "[\"3D Model\",\"Admin Panel\",\"Slider Image\",\"Compres Avif\"]",
+            "order": 0,
+            "is_featured": false,
+            "is_active": true,
+            "published_at": "2026-08-17T13:56:00.000000Z",
+            "created_at": "2026-08-17T05:58:29.000000Z",
+            "updated_at": "2026-08-17T05:58:36.000000Z"
+        },
+        {
             "id": 1,
             "title": "Nipah Park",
             "slug": "nipah-park",
