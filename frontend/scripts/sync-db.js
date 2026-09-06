@@ -12,11 +12,11 @@ try {
 
   // 2. Salin foto-foto storage ke frontend/public/storage
   console.log('🖼️  2. Menyalin berkas media & foto ke frontend/public/storage...');
-  execSync('powershell -Command "if (!(Test-Path \'frontend/public/storage\')) { New-Item -ItemType Directory -Path \'frontend/public/storage\' -Force }; Copy-Item -Path \'backend/storage/app/public/*\' -Destination \'frontend/public/storage\' -Recurse -Force"', { cwd: rootDir, stdio: 'inherit' });
+  execSync('powershell -Command "if (!(Test-Path \'frontend/public/storage\')) { New-Item -ItemType Directory -Path \'frontend/public/storage\' -Force }; Copy-Item -Path \'backend/storage/app/public/*\' -Destination \'frontend/public/storage\' -Recurse -Force; Remove-Item -Path \'frontend/public/storage/.gitignore\' -Force -ErrorAction SilentlyContinue"', { cwd: rootDir, stdio: 'inherit' });
 
   console.log('✅ Sinkronisasi Selesai!');
-  console.log('➡️  Pastikan file baru di frontend/public/storage ikut di-commit (sudah tidak di-gitignore).');
-  console.log('➡️  Lanjut: git add . && git commit -m "update data" && git push agar Vercel update.');
+  console.log('➡️  Pastikan file baru di frontend/public/storage ikut di-commit.');
+  console.log('➡️  Lanjut: git add . && git commit -m \"update data & media\" && git push agar Vercel update.');
 } catch (error) {
   console.error('❌ Terjadi kesalahan saat sinkronisasi:', error.message);
 }
