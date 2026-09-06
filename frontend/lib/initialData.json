@@ -64,6 +64,27 @@
             "updated_at": "2026-08-17T06:16:39.000000Z"
         },
         {
+            "id": 6,
+            "title": "LBKI",
+            "slug": "lbki",
+            "category": "Company Profile",
+            "short_description": "LBKI (Lembaga Berantas Korupsi Indonesia) adalah situs web lembaga yang hadir sebagai wujud komitmen kolektif untuk membebaskan tata kelola pemerintahan dan sektor privat dari praktik koruptif, dengan fokus utama pada pemberantasan, pencegahan, dan edukasi publik terkait korupsi.",
+            "description": "Setelah website diluncurkan, LBKI kini memiliki kanal digital resmi yang meningkatkan kredibilitas lembaga, mempermudah proses pendaftaran peserta seminar secara online, dan memperluas jangkauan publikasi kegiatan serta konten edukasi antikorupsi kepada masyarakat secara lebih efisien.",
+            "thumbnail": "projects\/thumbnails\/N7qQmyYI8Y92qET7ClSb851WHBCChcYYu5HVa0Z8.png",
+            "github_url": null,
+            "demo_url": "https:\/\/lbki.or.id\/",
+            "tech_stack": "[\"laravel\",\"MySQL\"]",
+            "challenges": null,
+            "solutions": null,
+            "key_features": "[\"Admin Panel\",\"Respontive\",\"Katalog Kegiatan\",\"Form Daftar Sekarang\"]",
+            "order": 0,
+            "is_featured": false,
+            "is_active": true,
+            "published_at": null,
+            "created_at": "2026-09-06T07:17:21.000000Z",
+            "updated_at": "2026-09-06T07:17:21.000000Z"
+        },
+        {
             "id": 1,
             "title": "Nipah Park",
             "slug": "nipah-park",
@@ -120,6 +141,20 @@
             "is_active": true,
             "created_at": "2026-07-21T06:52:57.000000Z",
             "updated_at": "2026-07-22T12:36:05.000000Z"
+        },
+        {
+            "id": 2,
+            "name": "Assistant Web Developer",
+            "issuer": "BNSP",
+            "issued_date": "2026-09-01T00:00:00.000000Z",
+            "expiry_date": "2029-09-01T00:00:00.000000Z",
+            "credential_id": "2513.K62.3.2.1957.00227.20951",
+            "credential_url": null,
+            "image": "certificates\/fMmc0Q4mHLdWNCjJWx5OvHRfpBmZywHOukfMKNEa.jpg",
+            "order": 0,
+            "is_active": true,
+            "created_at": "2026-09-06T07:11:51.000000Z",
+            "updated_at": "2026-09-06T07:19:50.000000Z"
         }
     ],
     "experiences": [

@@ -48,6 +48,17 @@
                         {{ session('error') }}
                     </div>
                 @endif
+
+                @if($errors->any())
+                    <div class="mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+                        <p class="font-semibold mb-1"><i class="fas fa-exclamation-circle mr-1"></i> Terjadi kesalahan validasi:</p>
+                        <ul class="list-disc list-inside text-sm">
+                            @foreach($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 
                 @yield('content')
             </main>
